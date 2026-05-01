@@ -1,0 +1,243 @@
+{
+    "student": {
+        "name": "Kuch bhi",
+        "student_id": "24k-2424",
+        "semester": 4,
+        "cgpa": 2.8
+    },
+    "courses": [
+        {
+            "course_id": "CS301",
+            "name": "Artificial Intelligence",
+            "credit_hours": 3,
+            "current_gpa": 2.5,
+            "target_gpa": 3.5,
+            "difficulty": "hard"
+        },
+        {
+            "course_id": "CS302",
+            "name": "Database Systems",
+            "credit_hours": 3,
+            "current_gpa": 3.0,
+            "target_gpa": 3.5,
+            "difficulty": "medium"
+        },
+        {
+            "course_id": "CS303",
+            "name": "Operating Systems",
+            "credit_hours": 3,
+            "current_gpa": 2.3,
+            "target_gpa": 3.0,
+            "difficulty": "hard"
+        },
+        {
+            "course_id": "CS304",
+            "name": "Software Engineering",
+            "credit_hours": 3,
+            "current_gpa": 3.2,
+            "target_gpa": 3.5,
+            "difficulty": "medium"
+        },
+        {
+            "course_id": "HU101",
+            "name": "Technical Writing",
+            "credit_hours": 2,
+            "current_gpa": 3.7,
+            "target_gpa": 4.0,
+            "difficulty": "easy"
+        }
+    ],
+    "assessments": [
+        {
+            "assessment_id": "A001",
+            "course_id": "CS301",
+            "title": "AI Assignment 2 - CSP Implementation",
+            "type": "assignment",
+            "due_date": "2026-05-05",
+            "weightage": 10,
+            "estimated_hours": 6,
+            "completed": false,
+            "linked_schedule_slots": []
+        },
+        {
+            "assessment_id": "A002",
+            "course_id": "CS303",
+            "title": "OS Mid-Term Exam",
+            "type": "exam",
+            "due_date": "2026-05-07",
+            "weightage": 25,
+            "estimated_hours": 10,
+            "completed": false,
+            "linked_schedule_slots": []
+        },
+        {
+            "assessment_id": "A003",
+            "course_id": "CS302",
+            "title": "DB Lab Project - ER Diagram + Queries",
+            "type": "project",
+            "due_date": "2026-05-10",
+            "weightage": 15,
+            "estimated_hours": 8,
+            "completed": false,
+            "linked_schedule_slots": []
+        },
+        {
+            "assessment_id": "A004",
+            "course_id": "CS304",
+            "title": "SRS Document Submission",
+            "type": "assignment",
+            "due_date": "2026-05-12",
+            "weightage": 10,
+            "estimated_hours": 4,
+            "completed": false,
+            "linked_schedule_slots": []
+        },
+        {
+            "assessment_id": "A005",
+            "course_id": "HU101",
+            "title": "Technical Report Draft",
+            "type": "assignment",
+            "due_date": "2026-05-15",
+            "weightage": 20,
+            "estimated_hours": 3,
+            "completed": false,
+            "linked_schedule_slots": []
+        }
+    ],
+    "calendar": {
+        "note": "Free slots are NOT stored here. They are computed at runtime by the CSP algorithm by finding gaps between booked blocks.",
+        "booked_blocks": [
+            {
+                "block_id": "CB001",
+                "label": "AI Lecture",
+                "day": "Monday",
+                "start_time": "08:00",
+                "end_time": "09:30",
+                "type": "class",
+                "recurring": true
+            },
+            {
+                "block_id": "CB002",
+                "label": "DB Lecture",
+                "day": "Monday",
+                "start_time": "10:00",
+                "end_time": "11:30",
+                "type": "class",
+                "recurring": true
+            },
+            {
+                "block_id": "CB003",
+                "label": "OS Lecture",
+                "day": "Tuesday",
+                "start_time": "08:00",
+                "end_time": "09:30",
+                "type": "class",
+                "recurring": true
+            },
+            {
+                "block_id": "CB004",
+                "label": "SE Lecture",
+                "day": "Wednesday",
+                "start_time": "10:00",
+                "end_time": "11:30",
+                "type": "class",
+                "recurring": true
+            },
+            {
+                "block_id": "CB005",
+                "label": "Technical Writing Lecture",
+                "day": "Thursday",
+                "start_time": "12:00",
+                "end_time": "13:00",
+                "type": "class",
+                "recurring": true
+            },
+            {
+                "block_id": "CB006",
+                "label": "DB Lab",
+                "day": "Wednesday",
+                "start_time": "14:00",
+                "end_time": "17:00",
+                "type": "lab",
+                "recurring": true
+            },
+            {
+                "block_id": "CB007",
+                "label": "Gym",
+                "day": "Monday",
+                "start_time": "17:00",
+                "end_time": "18:30",
+                "type": "personal",
+                "recurring": true
+            },
+            {
+                "block_id": "CB008",
+                "label": "Gym",
+                "day": "Wednesday",
+                "start_time": "17:00",
+                "end_time": "18:30",
+                "type": "personal",
+                "recurring": true
+            },
+            {
+                "block_id": "CB009",
+                "label": "Sleep",
+                "day": "all",
+                "start_time": "23:00",
+                "end_time": "07:00",
+                "type": "sleep",
+                "recurring": true
+            },
+            {
+                "block_id": "CB010",
+                "label": "Friday Prayers",
+                "day": "Friday",
+                "start_time": "12:30",
+                "end_time": "14:00",
+                "type": "personal",
+                "recurring": true
+            }
+        ]
+    },
+    "generated_schedule": [],
+    "chat_history": [
+        {
+            "role": "assistant",
+            "message": "Aoa! I'm StudyPolice AI. Your OS mid-term is in 6 days and you're at 2.3 in that course. Want me to build your schedule?",
+            "timestamp": "2026-05-01T09:00:00"
+        },
+        {
+            "role": "user",
+            "message": "yes please build it",
+            "timestamp": "2026-05-01T09:01:00"
+        }
+    ],
+    "settings": {
+        "study_mode": false,
+        "active_persona": "academic_advisor",
+        "available_personas": [
+            "academic_advisor",
+            "crisis_planner",
+            "desi_parent",
+            "roast_engine"
+        ],
+        "study_hours_per_day": 4,
+        "preferred_study_window": {
+            "start_time": "18:00",
+            "end_time": "23:00"
+        },
+        "session_length_minutes": 30
+    },
+    "enforcement": {
+        "study_mode_violations": 0,
+        "distraction_log": []
+    },
+    "session_meta": {
+        "current_date": "2026-05-01",
+        "last_updated": "2026-05-01T09:01:00"
+    },
+    "persona_thresholds": {
+        "crisis_planner_days_remaining": 2,
+        "desi_parent_violations_trigger": 3
+    }
+}
