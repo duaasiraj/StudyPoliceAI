@@ -1,0 +1,43 @@
+# Virtual Environment
+venv/
+.env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code
+.vscode/
+
+# Environment variables / secrets
+.env
+*.env
+
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build files
+dist/
+build/
+
+# Mypy
+.mypy_cache/
+
+# Ruff / lint
+.ruff_cache/
+
+# Temporary files
+*.tmp
+*.temp
