@@ -1,1 +1,2 @@
-#AI chat routes
+from fastapi import APIRouter
+router = APIRouter()
