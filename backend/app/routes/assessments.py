@@ -15,6 +15,19 @@ class NewAssessment(BaseModel):
     weightage: int
     estimated_hours: int
 
+
+@router.get("/")
+def list_assessments():
+    try:
+        session = get_session()
+        return session.get("assessments", [])
+    except Exception:
+        raise HTTPException(
+            status_code=500,
+            detail="Could not load assessments"
+        )
+
+
 @router.post("/")
 def add_assessment(assessment: NewAssessment):
     session = get_session()
