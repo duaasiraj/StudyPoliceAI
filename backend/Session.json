@@ -110,7 +110,7 @@
       {
         "block_id": "CB001",
         "label": "AI Lecture",
-        "day": "Monday",
+        "date": 14,
         "start_time": "08:00",
         "end_time": "09:30",
         "type": "class",
@@ -119,7 +119,7 @@
       {
         "block_id": "CB002",
         "label": "DB Lecture",
-        "day": "Monday",
+        "date": 17,
         "start_time": "10:00",
         "end_time": "11:30",
         "type": "class",
@@ -128,7 +128,7 @@
       {
         "block_id": "CB003",
         "label": "OS Lecture",
-        "day": "Tuesday",
+        "date": 19,
         "start_time": "08:00",
         "end_time": "09:30",
         "type": "class",
@@ -137,7 +137,7 @@
       {
         "block_id": "CB004",
         "label": "SE Lecture",
-        "day": "Wednesday",
+        "date": 21,
         "start_time": "10:00",
         "end_time": "11:30",
         "type": "class",
@@ -146,7 +146,7 @@
       {
         "block_id": "CB005",
         "label": "Technical Writing Lecture",
-        "day": "Thursday",
+        "date": 23,
         "start_time": "12:00",
         "end_time": "13:00",
         "type": "class",
@@ -155,7 +155,7 @@
       {
         "block_id": "CB006",
         "label": "DB Lab",
-        "day": "Wednesday",
+        "date": 25,
         "start_time": "14:00",
         "end_time": "17:00",
         "type": "lab",
@@ -164,7 +164,7 @@
       {
         "block_id": "CB007",
         "label": "Gym",
-        "day": "Monday",
+        "date": 27,
         "start_time": "17:00",
         "end_time": "18:30",
         "type": "personal",
@@ -173,7 +173,7 @@
       {
         "block_id": "CB008",
         "label": "Gym",
-        "day": "Wednesday",
+        "date": 29,
         "start_time": "17:00",
         "end_time": "18:30",
         "type": "personal",
@@ -182,7 +182,7 @@
       {
         "block_id": "CB009",
         "label": "Sleep",
-        "day": "all",
+        "date": 30,
         "start_time": "23:00",
         "end_time": "07:00",
         "type": "sleep",
@@ -191,73 +191,73 @@
       {
         "block_id": "CB010",
         "label": "Friday Prayers",
-        "day": "Friday",
+        "date": 31,
         "start_time": "12:30",
         "end_time": "14:00",
         "type": "personal",
         "recurring": true
       }
     ]
+},
+"generated_schedule": [],
+"chat_history": [
+  {
+    "role": "assistant",
+    "message": "Aoa! I'm StudyPolice AI. Your OS mid-term is in 6 days and you're at 2.3 in that course. Want me to build your schedule?",
+    "timestamp": "2026-05-01T09:00:00"
   },
-  "generated_schedule": [],
-  "chat_history": [
-    {
-      "role": "assistant",
-      "message": "Aoa! I'm StudyPolice AI. Your OS mid-term is in 6 days and you're at 2.3 in that course. Want me to build your schedule?",
-      "timestamp": "2026-05-01T09:00:00"
-    },
-    {
-      "role": "user",
-      "message": "yes please build it",
-      "timestamp": "2026-05-01T09:01:00"
-    },
-    {
-      "role": "user",
-      "message": "I need to study for AI",
-      "timestamp": "2026-05-09T13:24:40.737684"
-    },
-    {
-      "role": "assistant",
-      "message": "To study for Artificial Intelligence (CS301), I recommend you focus on the upcoming assignment, \"AI Assignment 2 - CSP Implementation\" (A001), which is due on May 5, 2026. This assignment carries a weightage of 10% and is estimated to require 6 hours of work.\n\nConsidering your current GPA in CS301 is 2.5, and your target GPA is 3.5, it's essential to perform well in this assignment. I suggest you allocate dedicated time to review the course material, practice problems, and work on the assignment.\n\nGiven your overall CGPA of 2.8, it's crucial to balance your study time for CS301 with your other courses, such as Database Systems (CS302), Operating Systems (CS303), Software Engineering (CS304), and Technical Writing (HU101).\n\nTo make the most of your study time, I recommend creating a schedule that allows you to work on the AI assignment in focused blocks, with regular breaks to review and practice other course material. Don't forget to also prepare for the other upcoming assessments, such as the OS Mid-Term Exam (A002) on May 7, 2026.\n\nLet's break down your study plan for CS301:\n\n1. Review the course material, focusing on the topics relevant to the assignment.\n2. Practice problems and past assignments to reinforce your understanding.\n3. Allocate dedicated time to work on the assignment, aiming to complete it well before the deadline.\n4. Regularly review and adjust your study plan to ensure you're on track to meet your target GPA.\n\nBy following this plan, you'll be well-prepared for the AI assignment and can make progress towards achieving your target GPA in CS301. How does this sound? Would you like to discuss any specific challenges or areas of concern you're facing in CS301?",
-      "timestamp": "2026-05-09T13:24:40.737684"
-    },
-    {
-      "role": "user",
-      "message": "Recommend a netflix show hehe",
-      "timestamp": "2026-05-09T13:25:15.633958"
-    },
-    {
-      "role": "assistant",
-      "message": "Kuch bhi, let's get real for a second. I know you're procrastinating, and I'm not here to enable your binge-watching habits... yet. But since you asked, I'll give you a quick Netflix show recommendation. Have you seen \"Schitt's Creek\"? It's a hilarious show that's all about perseverance and growth, kind of like what you need to do with your grades.\n\nNow, back to reality. Your CGPA is 2.8, and you're in your 4th semester. It's time to step up your game, especially in courses like Artificial Intelligence (CS301) where you're currently at 2.5 GPA. You've got an assignment due on May 5th for CS301, and an OS Mid-Term Exam on May 7th. Don't even get me started on your Operating Systems (CS303) grade - 2.3 GPA is not going to cut it.\n\nYou've got a lot on your plate, but I know you can do better. So here's the deal. Take a 30-minute break to watch an episode of \"Schitt's Creek\" (I recommend Season 1, Episode 1), and then get back to work. You've got assignments to finish, exams to study for, and a Technical Report Draft due on May 15th for HU101. Let's get those grades up, Kuch bhi! You can do this!",
-      "timestamp": "2026-05-09T13:25:15.633958"
-    }
-  ],
-  "settings": {
-    "study_mode": true,
-    "active_persona": "roast_engine",
-    "available_personas": [
-      "academic_advisor",
-      "crisis_planner",
-      "desi_parent",
-      "roast_engine"
-    ],
-    "study_hours_per_day": 4,
-    "preferred_study_window": {
-      "start_time": "18:00",
-      "end_time": "23:00"
-    },
-    "session_length_minutes": 30
+  {
+    "role": "user",
+    "message": "yes please build it",
+    "timestamp": "2026-05-01T09:01:00"
   },
-  "enforcement": {
-    "study_mode_violations": 1,
-    "distraction_log": []
+  {
+    "role": "user",
+    "message": "I need to study for AI",
+    "timestamp": "2026-05-09T13:24:40.737684"
   },
-  "session_meta": {
-    "current_date": "2026-05-01",
-    "last_updated": "2026-05-09T13:25:15.633958"
+  {
+    "role": "assistant",
+    "message": "To study for Artificial Intelligence (CS301), I recommend you focus on the upcoming assignment, \"AI Assignment 2 - CSP Implementation\" (A001), which is due on May 5, 2026. This assignment carries a weightage of 10% and is estimated to require 6 hours of work.\n\nConsidering your current GPA in CS301 is 2.5, and your target GPA is 3.5, it's essential to perform well in this assignment. I suggest you allocate dedicated time to review the course material, practice problems, and work on the assignment.\n\nGiven your overall CGPA of 2.8, it's crucial to balance your study time for CS301 with your other courses, such as Database Systems (CS302), Operating Systems (CS303), Software Engineering (CS304), and Technical Writing (HU101).\n\nTo make the most of your study time, I recommend creating a schedule that allows you to work on the AI assignment in focused blocks, with regular breaks to review and practice other course material. Don't forget to also prepare for the other upcoming assessments, such as the OS Mid-Term Exam (A002) on May 7, 2026.\n\nLet's break down your study plan for CS301:\n\n1. Review the course material, focusing on the topics relevant to the assignment.\n2. Practice problems and past assignments to reinforce your understanding.\n3. Allocate dedicated time to work on the assignment, aiming to complete it well before the deadline.\n4. Regularly review and adjust your study plan to ensure you're on track to meet your target GPA.\n\nBy following this plan, you'll be well-prepared for the AI assignment and can make progress towards achieving your target GPA in CS301. How does this sound? Would you like to discuss any specific challenges or areas of concern you're facing in CS301?",
+    "timestamp": "2026-05-09T13:24:40.737684"
   },
-  "persona_thresholds": {
-    "crisis_planner_days_remaining": 2,
-    "desi_parent_violations_trigger": 3
+  {
+    "role": "user",
+    "message": "Recommend a netflix show hehe",
+    "timestamp": "2026-05-09T13:25:15.633958"
+  },
+  {
+    "role": "assistant",
+    "message": "Kuch bhi, let's get real for a second. I know you're procrastinating, and I'm not here to enable your binge-watching habits... yet. But since you asked, I'll give you a quick Netflix show recommendation. Have you seen \"Schitt's Creek\"? It's a hilarious show that's all about perseverance and growth, kind of like what you need to do with your grades.\n\nNow, back to reality. Your CGPA is 2.8, and you're in your 4th semester. It's time to step up your game, especially in courses like Artificial Intelligence (CS301) where you're currently at 2.5 GPA. You've got an assignment due on May 5th for CS301, and an OS Mid-Term Exam on May 7th. Don't even get me started on your Operating Systems (CS303) grade - 2.3 GPA is not going to cut it.\n\nYou've got a lot on your plate, but I know you can do better. So here's the deal. Take a 30-minute break to watch an episode of \"Schitt's Creek\" (I recommend Season 1, Episode 1), and then get back to work. You've got assignments to finish, exams to study for, and a Technical Report Draft due on May 15th for HU101. Let's get those grades up, Kuch bhi! You can do this!",
+    "timestamp": "2026-05-09T13:25:15.633958"
   }
+],
+"settings": {
+  "study_mode": true,
+  "active_persona": "roast_engine",
+  "available_personas": [
+    "academic_advisor",
+    "crisis_planner",
+    "desi_parent",
+    "roast_engine"
+  ],
+  "study_hours_per_day": 4,
+  "preferred_study_window": {
+    "start_time": "18:00",
+    "end_time": "23:00"
+  },
+  "session_length_minutes": 30
+},
+"enforcement": {
+  "study_mode_violations": 1,
+  "distraction_log": []
+},
+"session_meta": {
+  "current_date": "2026-05-01",
+  "last_updated": "2026-05-09T13:25:15.633958"
+},
+"persona_thresholds": {
+  "crisis_planner_days_remaining": 2,
+  "desi_parent_violations_trigger": 3
+}
 }

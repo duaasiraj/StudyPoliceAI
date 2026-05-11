@@ -46,33 +46,23 @@ def add_assessment(assessment: NewAssessment):
 
 @router.patch("/{assessment_id}/complete")
 def mark_complete(assessment_id: str):
-    try:
-        session=get_session()
-        assessments=session.get("assessments",[])
-
-        for assessment in assessments:
-            if assessment.get("assessment_id")==assessment_id:
-                assessment["completed"]=True
-                save_session(session)
-                return {"message":"Marked complete"}
-        raise HTTPException(status_code=404, detail="Assessment not found")
-    except Exception:
-        raise HTTPException(status_code=500,detail="Could not update assessment")
+    session = get_session()
+    assessments = session.get("assessments", [])
+    for assessment in assessments:
+        if assessment.get("assessment_id") == assessment_id:
+            assessment["completed"] = True
+            save_session(session)
+            return {"message": "Marked complete"}
+    raise HTTPException(status_code=404, detail="Assessment not found")
     
 
 @router.delete("/{assessment_id}")
 def delete_assessment(assessment_id: str):
-    try:
-        session = get_session()
-        assessments = session.get("assessments", [])
-        filtered = [
-            a for a in assessments 
-            if a.get("assessment_id") != assessment_id
-        ]
-        if len(filtered) == len(assessments):
-            raise HTTPException(status_code=404, detail="Assessment not found")
-        session["assessments"] = filtered
-        save_session(session)
-        return {"message": "Deleted"}
-    except Exception:
-        raise HTTPException(status_code=500, detail="Could not delete assessment")
+    session = get_session()
+    assessments = session.get("assessments", [])
+    filtered = [a for a in assessments if a.get("assessment_id") != assessment_id]
+    if len(filtered) == len(assessments):
+        raise HTTPException(status_code=404, detail="Assessment not found")
+    session["assessments"] = filtered
+    save_session(session)
+    return {"message": "Deleted"}
