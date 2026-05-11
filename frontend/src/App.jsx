@@ -5,7 +5,7 @@ import Landing from './pages/Landing'
 import Chat from './pages/Chat'
 import Dashboard from './pages/Dashboard'
 // import Schedule from './pages/Schedule'
-// import Assessments from './pages/Assessments'
+import Assessments from './pages/Assessments'
 // import Calendar from './pages/Calendar'
 import Settings from './pages/Settings'
 
@@ -14,7 +14,7 @@ const PAGES = {
   chat: Chat,
   dashboard: Dashboard,
   // schedule: Schedule,
-  // assessments: Assessments,
+  assessments: Assessments,
   // calendar: Calendar,
   settings: Settings,
 }

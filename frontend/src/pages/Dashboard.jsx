@@ -5,7 +5,7 @@ const PERSONA_LABELS = {
   academic_advisor:{label: 'Academic Advisor',color: 'badge-blue'},
   crisis_planner:{label: 'Crisis Planner',color: 'badge-yellow'},
   desi_parent: {label: 'Desi Parent',color: 'badge-purple'},
-  roast_engine: {label: 'Roast Engine 🔥',color: 'badge-red'},
+  roast_engine: {label: 'Roast Engine',color: 'badge-red'},
 }
 
 
