@@ -24,7 +24,7 @@ def is_conflicting(slot: dict, block: dict) -> bool:
     slot_end=time_to_minutes(slot["end_time"])
     block_start=time_to_minutes(block["start_time"])
     block_end=time_to_minutes(block["end_time"])
-    return slot<block_end and block_start<slot_end
+    return slot_start < block_end and block_start < slot_end
 
 
 def generate_all_slots(

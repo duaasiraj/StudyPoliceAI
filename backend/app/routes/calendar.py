@@ -7,11 +7,16 @@ router = APIRouter()
 
 class NewCalendarBlock(BaseModel):
     label: str
-    date: int        # date of the month"
-    start_time: str # "HH:MM"
+    date: int        # date of the month
+    start_time: str  # "HH:MM"
     end_time: str
-    type: str       # "class", "lab", "personal", "sleep"
+    type: str        # "class", "lab", "personal", "sleep"
     recurring: bool
+
+@router.get("/")
+def get_blocks():
+    session = get_session()
+    return {"booked_blocks": session["calendar"]["booked_blocks"]}
 
 @router.post("/")
 def add_block(block: NewCalendarBlock):
@@ -30,15 +35,11 @@ def delete_block(block_id: str):
     try:
         session = get_session()
         blocks = session["calendar"]["booked_blocks"]
-        filtered = [
-            b for b in blocks
-            if b["block_id"] != block_id
-        ]
+        filtered = [b for b in blocks if b["block_id"] != block_id]
         if len(filtered) == len(blocks):
             raise HTTPException(status_code=404, detail="Block not found")
         session["calendar"]["booked_blocks"] = filtered
         save_session(session)
         return {"message": "Deleted"}
-
     except Exception:
         raise HTTPException(status_code=500, detail="Could not delete block")
