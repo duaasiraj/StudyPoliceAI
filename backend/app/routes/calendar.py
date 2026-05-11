@@ -7,7 +7,7 @@ router = APIRouter()
 
 class NewCalendarBlock(BaseModel):
     label: str
-    day: str        # "Monday", "Tuesday", etc. or "all"
+    date: int        # date of the month"
     start_time: str # "HH:MM"
     end_time: str
     type: str       # "class", "lab", "personal", "sleep"
