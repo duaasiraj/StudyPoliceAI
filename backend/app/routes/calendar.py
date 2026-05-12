@@ -2,6 +2,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.services.session_service import get_session, save_session
+import uuid
 
 router = APIRouter()
 
@@ -21,9 +22,10 @@ def get_blocks():
 @router.post("/")
 def add_block(block: NewCalendarBlock):
     session = get_session()
-    count = len(session["calendar"]["booked_blocks"]) + 1
+    # Use a short uuid suffix so IDs are always unique even after deletions
+    unique_id = f"CB-{uuid.uuid4().hex[:8].upper()}"
     new_block = {
-        "block_id": f"CB{count:03d}",
+        "block_id": unique_id,
         **block.model_dump()
     }
     session["calendar"]["booked_blocks"].append(new_block)
@@ -32,14 +34,11 @@ def add_block(block: NewCalendarBlock):
 
 @router.delete("/{block_id}")
 def delete_block(block_id: str):
-    try:
-        session = get_session()
-        blocks = session["calendar"]["booked_blocks"]
-        filtered = [b for b in blocks if b["block_id"] != block_id]
-        if len(filtered) == len(blocks):
-            raise HTTPException(status_code=404, detail="Block not found")
-        session["calendar"]["booked_blocks"] = filtered
-        save_session(session)
-        return {"message": "Deleted"}
-    except Exception:
-        raise HTTPException(status_code=500, detail="Could not delete block")
+    session = get_session()
+    blocks = session["calendar"]["booked_blocks"]
+    filtered = [b for b in blocks if b["block_id"] != block_id]
+    if len(filtered) == len(blocks):
+        raise HTTPException(status_code=404, detail="Block not found")
+    session["calendar"]["booked_blocks"] = filtered
+    save_session(session)
+    return {"message": "Deleted"}

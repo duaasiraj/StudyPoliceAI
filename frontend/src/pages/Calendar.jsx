@@ -59,7 +59,7 @@ function BlockPill({ block, customTypes }) {
   )
 }
 
-function DayModal({ day, month, year, blocks, customTypes, onClose, onDelete, onAddBlock }) {
+function DayModal({ day, month, year, blocks, customTypes, onClose, onDelete, onAddBlock, onClearDay }) {
   const overlayRef = useRef(null)
 
   useEffect(() => {
@@ -110,6 +110,14 @@ function DayModal({ day, month, year, blocks, customTypes, onClose, onDelete, on
             >
               + Add Block
             </button>
+            {blocks.some(b => !b.recurring) && (
+              <button
+                className="btn btn-sm btn-danger"
+                onClick={() => onClearDay(day)}
+              >
+                Clear Day
+              </button>
+            )}
             <button className="btn btn-sm" onClick={onClose} style={{ padding: '5px 10px' }}>
               ✕
             </button>
@@ -216,7 +224,7 @@ export default function Calendar() {
     setError(null)
     try {
       // Build full date string from the day number + viewed month/year
-      const dayNum = Number(form.date)
+      const dayNum = Number(form.date) || (isCurrentMonth ? todayDate : 1)
       const dateStr = `${viewYear}-${String(viewMonth + 1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`
       const res = await fetch('http://localhost:8000/api/calendar/', {
         method: 'POST',
@@ -284,7 +292,9 @@ export default function Calendar() {
   })
 
   const openModalForDay = (day) => {
-    if (getBlocksForDay(day).length > 0) setModalDay(day)
+    // Mirror getBlocksForDay exactly (recurring = show on every day, non-recurring = exact date match)
+    // Always open the modal — even empty days show the modal with an "+ Add Block" option
+    setModalDay(day)
   }
 
   const openFormForDay = (day) => {
@@ -305,6 +315,65 @@ export default function Calendar() {
       })
       return stillHasBlocks ? prev : null
     })
+  }
+
+  // Clear non-recurring blocks for a specific day only.
+  // Recurring blocks are intentionally excluded — deleting a recurring block removes it
+  // from every week, not just this day. Use the individual ✕ button to remove a recurring block.
+  const clearDay = async (day) => {
+    const toDelete = blocks.filter(b => {
+      if (b.recurring) return false  // never bulk-delete recurring blocks
+      const parsed = parseBlockDate(b.date)
+      if (parsed.year !== null) return parsed.year === viewYear && parsed.month === viewMonth && parsed.day === day
+      return parsed.day === day
+    })
+    if (toDelete.length === 0) {
+      alert('No one-off blocks on this day to clear. To remove a recurring block, use the ✕ button next to it.')
+      return
+    }
+    if (!confirm(`Clear ${toDelete.length} one-off block(s) for ${MONTH_NAMES[viewMonth]} ${String(day).padStart(2,'0')}? Recurring blocks will not be affected.`)) return
+    setError(null)
+    try {
+      // Delete sequentially to avoid race on duplicate block_ids in session
+      for (const b of toDelete) {
+        await fetch(`http://localhost:8000/api/calendar/${b.block_id}`, { method: 'DELETE' })
+      }
+      // Reload from server so state exactly mirrors Session.json
+      const res = await fetch('http://localhost:8000/api/session/calendar')
+      const data = await res.json()
+      setBlocks(Array.isArray(data) ? data : [])
+      setModalDay(null)
+    } catch {
+      setError('Could not clear day')
+    }
+  }
+
+  // Clear ALL blocks for the viewed month (recurring and non-recurring)
+  const clearMonth = async () => {
+    // For recurring: match by month+day (same logic as display)
+    // For non-recurring: match by full year+month
+    const toDelete = blocks.filter(b => {
+      if (b.recurring) return false  // never bulk-delete recurring blocks
+      const parsed = parseBlockDate(b.date)
+      if (parsed.year !== null) return parsed.year === viewYear && parsed.month === viewMonth
+      return false
+    })
+    if (toDelete.length === 0) return
+    if (!confirm(`Clear ${toDelete.length} one-off block(s) for ${MONTH_NAMES[viewMonth]} ${viewYear}? Recurring blocks will not be affected.`)) return
+    setError(null)
+    try {
+      // Delete sequentially to avoid race on duplicate block_ids in session
+      for (const b of toDelete) {
+        await fetch(`http://localhost:8000/api/calendar/${b.block_id}`, { method: 'DELETE' })
+      }
+      // Reload from server so state exactly mirrors Session.json
+      const res = await fetch('http://localhost:8000/api/session/calendar')
+      const data = await res.json()
+      setBlocks(Array.isArray(data) ? data : [])
+      setModalDay(null)
+    } catch {
+      setError('Could not clear month')
+    }
   }
 
   const allTypeKeys = ['all', ...Object.keys(BUILTIN_TYPES), ...customTypes.map(c => c.value)]
@@ -333,32 +402,32 @@ export default function Calendar() {
           onClose={() => setModalDay(null)}
           onDelete={handleModalDelete}
           onAddBlock={openFormForDay}
+          onClearDay={clearDay}
         />
       )}
 
-      <div className="page-header">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
-          <div>
-            <div className="page-title">Calendar</div>
-            <div className="page-subtitle">// {MONTH_NAMES[viewMonth]} {viewYear} · {blocksThisMonth.length} booked blocks</div>
+      {/* ── Compact toolbar: title · nav · actions all on one line ── */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
+
+        {/* Title + subtitle stacked on the left */}
+        <div style={{ marginRight: '4px' }}>
+          <div className="page-title" style={{ margin: 0, lineHeight: 1.1 }}>Calendar</div>
+          <div className="page-subtitle" style={{ margin: 0, fontSize: '11px' }}>
+            // {MONTH_NAMES[viewMonth]} {viewYear} · {blocksThisMonth.length} blocks
           </div>
-          <button className="btn btn-primary" onClick={() => setShowForm(s => !s)}>
-            {showForm ? '✕ Cancel' : '+ Add Block'}
-          </button>
         </div>
-      </div>
 
-      {error && <div className="error-banner" style={{ marginBottom: '16px' }}>{error}</div>}
+        {/* Divider */}
+        <div style={{ width: '1px', height: '28px', background: 'var(--border2)', margin: '0 4px' }} />
 
-      {/* Month / Year navigation */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' }}>
-        <button className="btn btn-sm" onClick={goToPrevMonth} title="Previous month">‹</button>
+        {/* Month / year nav */}
+        <button className="btn btn-sm" onClick={goToPrevMonth} title="Previous month" style={{ padding: '5px 9px' }}>‹</button>
 
         <select
           className="select"
           value={viewMonth}
           onChange={e => { setViewMonth(Number(e.target.value)); setModalDay(null) }}
-          style={{ minWidth: '120px' }}
+          style={{ width: 'auto', padding: '5px 8px', fontSize: '13px' }}
         >
           {MONTH_NAMES.map((name, i) => (
             <option key={i} value={i}>{name}</option>
@@ -369,25 +438,40 @@ export default function Calendar() {
           className="select"
           value={viewYear}
           onChange={e => { setViewYear(Number(e.target.value)); setModalDay(null) }}
-          style={{ minWidth: '80px' }}
+          style={{ width: 'auto', padding: '5px 8px', fontSize: '13px' }}
         >
           {yearOptions.map(y => (
             <option key={y} value={y}>{y}</option>
           ))}
         </select>
 
-        <button className="btn btn-sm" onClick={goToNextMonth} title="Next month">›</button>
+        <button className="btn btn-sm" onClick={goToNextMonth} title="Next month" style={{ padding: '5px 9px' }}>›</button>
 
         {!isCurrentMonth && (
           <button
             className="btn btn-sm"
             onClick={() => { setViewYear(thisYear); setViewMonth(thisMonth); setModalDay(null) }}
-            style={{ marginLeft: '4px' }}
           >
             Today
           </button>
         )}
+
+        {/* Divider */}
+        <div style={{ width: '1px', height: '28px', background: 'var(--border2)', margin: '0 4px' }} />
+
+        {/* Action buttons */}
+        <button className="btn btn-sm btn-primary" onClick={() => setShowForm(s => !s)}>
+          {showForm ? '✕ Cancel' : '+ Add Block'}
+        </button>
+
+        {blocksThisMonth.length > 0 && (
+          <button className="btn btn-sm btn-danger" onClick={clearMonth}>
+            Clear Month
+          </button>
+        )}
       </div>
+
+      {error && <div className="error-banner" style={{ marginBottom: '12px' }}>{error}</div>}
 
       {showForm && (
         <div className="card" style={{ marginBottom: '20px', borderColor: 'var(--accent-border)' }}>
@@ -535,7 +619,7 @@ export default function Calendar() {
                     gap: '3px',
                     transition: 'border-color 0.15s',
                     opacity: isPast && !hasBlocks ? 0.3 : 1,
-                    cursor: hasBlocks ? 'pointer' : 'default',
+                    cursor: 'pointer',
                   }}
                 >
                   <div style={{
