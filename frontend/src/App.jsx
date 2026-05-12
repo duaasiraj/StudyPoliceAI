@@ -4,18 +4,18 @@ import Sidebar from './components/Sidebar'
 import Landing from './pages/Landing'
 import Chat from './pages/Chat'
 import Dashboard from './pages/Dashboard'
-// import Schedule from './pages/Schedule'
+import Schedule from './pages/Schedule'
 // import Assessments from './pages/Assessments'
-// import Calendar from './pages/Calendar'
+import Calendar from './pages/Calendar'
 import Settings from './pages/Settings'
 
 const PAGES = {
   landing: Landing,
   chat: Chat,
   dashboard: Dashboard,
-  // schedule: Schedule,
+  schedule: Schedule,
   // assessments: Assessments,
-  // calendar: Calendar,
+  calendar: Calendar,
   settings: Settings,
 }
 
