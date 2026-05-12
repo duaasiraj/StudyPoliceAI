@@ -49,28 +49,6 @@
   ],
   "assessments": [
     {
-      "assessment_id": "A001",
-      "course_id": "CS301",
-      "title": "AI Assignment 2 - CSP Implementation",
-      "type": "assignment",
-      "due_date": "2026-05-05",
-      "weightage": 10,
-      "estimated_hours": 6,
-      "completed": false,
-      "linked_schedule_slots": []
-    },
-    {
-      "assessment_id": "A002",
-      "course_id": "CS303",
-      "title": "OS Mid-Term Exam",
-      "type": "exam",
-      "due_date": "2026-05-07",
-      "weightage": 25,
-      "estimated_hours": 10,
-      "completed": false,
-      "linked_schedule_slots": []
-    },
-    {
       "assessment_id": "A003",
       "course_id": "CS302",
       "title": "DB Lab Project - ER Diagram + Queries",
@@ -79,7 +57,104 @@
       "weightage": 15,
       "estimated_hours": 8,
       "completed": false,
-      "linked_schedule_slots": []
+      "linked_schedule_slots": [
+        {
+          "date": 15,
+          "day_name": "Friday",
+          "start_time": "21:00",
+          "end_time": "21:30"
+        },
+        {
+          "date": 15,
+          "day_name": "Friday",
+          "start_time": "21:30",
+          "end_time": "22:00"
+        },
+        {
+          "date": 15,
+          "day_name": "Friday",
+          "start_time": "22:00",
+          "end_time": "22:30"
+        },
+        {
+          "date": 15,
+          "day_name": "Friday",
+          "start_time": "22:30",
+          "end_time": "23:00"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "18:30",
+          "end_time": "19:00"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "19:00",
+          "end_time": "19:30"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "19:30",
+          "end_time": "20:00"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "20:00",
+          "end_time": "20:30"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "20:30",
+          "end_time": "21:00"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "21:00",
+          "end_time": "21:30"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "21:30",
+          "end_time": "22:00"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "22:00",
+          "end_time": "22:30"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "22:30",
+          "end_time": "23:00"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "18:30",
+          "end_time": "19:00"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "19:00",
+          "end_time": "19:30"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "19:30",
+          "end_time": "20:00"
+        }
+      ]
     },
     {
       "assessment_id": "A004",
@@ -90,7 +165,56 @@
       "weightage": 10,
       "estimated_hours": 4,
       "completed": false,
-      "linked_schedule_slots": []
+      "linked_schedule_slots": [
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "20:00",
+          "end_time": "20:30"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "20:30",
+          "end_time": "21:00"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "21:00",
+          "end_time": "21:30"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "21:30",
+          "end_time": "22:00"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "22:00",
+          "end_time": "22:30"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "22:30",
+          "end_time": "23:00"
+        },
+        {
+          "date": 18,
+          "day_name": "Monday",
+          "start_time": "18:30",
+          "end_time": "19:00"
+        },
+        {
+          "date": 18,
+          "day_name": "Monday",
+          "start_time": "19:00",
+          "end_time": "19:30"
+        }
+      ]
     },
     {
       "assessment_id": "A005",
@@ -101,163 +225,823 @@
       "weightage": 20,
       "estimated_hours": 3,
       "completed": false,
-      "linked_schedule_slots": []
+      "linked_schedule_slots": [
+        {
+          "date": 18,
+          "day_name": "Monday",
+          "start_time": "19:30",
+          "end_time": "20:00"
+        },
+        {
+          "date": 18,
+          "day_name": "Monday",
+          "start_time": "20:00",
+          "end_time": "20:30"
+        },
+        {
+          "date": 18,
+          "day_name": "Monday",
+          "start_time": "20:30",
+          "end_time": "21:00"
+        },
+        {
+          "date": 18,
+          "day_name": "Monday",
+          "start_time": "21:00",
+          "end_time": "21:30"
+        },
+        {
+          "date": 18,
+          "day_name": "Monday",
+          "start_time": "21:30",
+          "end_time": "22:00"
+        },
+        {
+          "date": 18,
+          "day_name": "Monday",
+          "start_time": "22:00",
+          "end_time": "22:30"
+        }
+      ]
+    },
+    {
+      "assessment_id": "A006",
+      "completed": false,
+      "linked_schedule_slots": [],
+      "course_id": "CS301",
+      "title": "Quiz 2",
+      "type": "quiz",
+      "due_date": "2026-05-28",
+      "weightage": 2,
+      "estimated_hours": 2
     }
   ],
   "calendar": {
     "note": "Free slots are NOT stored here. They are computed at runtime by the CSP algorithm by finding gaps between booked blocks.",
     "booked_blocks": [
       {
-        "block_id": "CB001",
-        "label": "AI Lecture",
-        "date": 14,
+        "block_id": "CB-BD21B7A3",
+        "label": "study",
+        "date": "2026-05-12",
         "start_time": "08:00",
-        "end_time": "09:30",
+        "end_time": "10:00",
         "type": "class",
-        "recurring": true
-      },
-      {
-        "block_id": "CB002",
-        "label": "DB Lecture",
-        "date": 17,
-        "start_time": "10:00",
-        "end_time": "11:30",
-        "type": "class",
-        "recurring": true
-      },
-      {
-        "block_id": "CB003",
-        "label": "OS Lecture",
-        "date": 19,
-        "start_time": "08:00",
-        "end_time": "09:30",
-        "type": "class",
-        "recurring": true
-      },
-      {
-        "block_id": "CB004",
-        "label": "SE Lecture",
-        "date": 21,
-        "start_time": "10:00",
-        "end_time": "11:30",
-        "type": "class",
-        "recurring": true
-      },
-      {
-        "block_id": "CB005",
-        "label": "Technical Writing Lecture",
-        "date": 23,
-        "start_time": "12:00",
-        "end_time": "13:00",
-        "type": "class",
-        "recurring": true
-      },
-      {
-        "block_id": "CB006",
-        "label": "DB Lab",
-        "date": 25,
-        "start_time": "14:00",
-        "end_time": "17:00",
-        "type": "lab",
-        "recurring": true
-      },
-      {
-        "block_id": "CB007",
-        "label": "Gym",
-        "date": 27,
-        "start_time": "17:00",
-        "end_time": "18:30",
-        "type": "personal",
-        "recurring": true
-      },
-      {
-        "block_id": "CB008",
-        "label": "Gym",
-        "date": 29,
-        "start_time": "17:00",
-        "end_time": "18:30",
-        "type": "personal",
-        "recurring": true
-      },
-      {
-        "block_id": "CB009",
-        "label": "Sleep",
-        "date": 30,
-        "start_time": "23:00",
-        "end_time": "07:00",
-        "type": "sleep",
-        "recurring": true
-      },
-      {
-        "block_id": "CB010",
-        "label": "Friday Prayers",
-        "date": 31,
-        "start_time": "12:30",
-        "end_time": "14:00",
-        "type": "personal",
         "recurring": true
       }
     ]
-},
-"generated_schedule": [],
-"chat_history": [
-  {
-    "role": "assistant",
-    "message": "Aoa! I'm StudyPolice AI. Your OS mid-term is in 6 days and you're at 2.3 in that course. Want me to build your schedule?",
-    "timestamp": "2026-05-01T09:00:00"
   },
-  {
-    "role": "user",
-    "message": "yes please build it",
-    "timestamp": "2026-05-01T09:01:00"
-  },
-  {
-    "role": "user",
-    "message": "I need to study for AI",
-    "timestamp": "2026-05-09T13:24:40.737684"
-  },
-  {
-    "role": "assistant",
-    "message": "To study for Artificial Intelligence (CS301), I recommend you focus on the upcoming assignment, \"AI Assignment 2 - CSP Implementation\" (A001), which is due on May 5, 2026. This assignment carries a weightage of 10% and is estimated to require 6 hours of work.\n\nConsidering your current GPA in CS301 is 2.5, and your target GPA is 3.5, it's essential to perform well in this assignment. I suggest you allocate dedicated time to review the course material, practice problems, and work on the assignment.\n\nGiven your overall CGPA of 2.8, it's crucial to balance your study time for CS301 with your other courses, such as Database Systems (CS302), Operating Systems (CS303), Software Engineering (CS304), and Technical Writing (HU101).\n\nTo make the most of your study time, I recommend creating a schedule that allows you to work on the AI assignment in focused blocks, with regular breaks to review and practice other course material. Don't forget to also prepare for the other upcoming assessments, such as the OS Mid-Term Exam (A002) on May 7, 2026.\n\nLet's break down your study plan for CS301:\n\n1. Review the course material, focusing on the topics relevant to the assignment.\n2. Practice problems and past assignments to reinforce your understanding.\n3. Allocate dedicated time to work on the assignment, aiming to complete it well before the deadline.\n4. Regularly review and adjust your study plan to ensure you're on track to meet your target GPA.\n\nBy following this plan, you'll be well-prepared for the AI assignment and can make progress towards achieving your target GPA in CS301. How does this sound? Would you like to discuss any specific challenges or areas of concern you're facing in CS301?",
-    "timestamp": "2026-05-09T13:24:40.737684"
-  },
-  {
-    "role": "user",
-    "message": "Recommend a netflix show hehe",
-    "timestamp": "2026-05-09T13:25:15.633958"
-  },
-  {
-    "role": "assistant",
-    "message": "Kuch bhi, let's get real for a second. I know you're procrastinating, and I'm not here to enable your binge-watching habits... yet. But since you asked, I'll give you a quick Netflix show recommendation. Have you seen \"Schitt's Creek\"? It's a hilarious show that's all about perseverance and growth, kind of like what you need to do with your grades.\n\nNow, back to reality. Your CGPA is 2.8, and you're in your 4th semester. It's time to step up your game, especially in courses like Artificial Intelligence (CS301) where you're currently at 2.5 GPA. You've got an assignment due on May 5th for CS301, and an OS Mid-Term Exam on May 7th. Don't even get me started on your Operating Systems (CS303) grade - 2.3 GPA is not going to cut it.\n\nYou've got a lot on your plate, but I know you can do better. So here's the deal. Take a 30-minute break to watch an episode of \"Schitt's Creek\" (I recommend Season 1, Episode 1), and then get back to work. You've got assignments to finish, exams to study for, and a Technical Report Draft due on May 15th for HU101. Let's get those grades up, Kuch bhi! You can do this!",
-    "timestamp": "2026-05-09T13:25:15.633958"
-  }
-],
-"settings": {
-  "study_mode": true,
-  "active_persona": "roast_engine",
-  "available_personas": [
-    "academic_advisor",
-    "crisis_planner",
-    "desi_parent",
-    "roast_engine"
+  "generated_schedule": [
+    {
+      "assessment_id": "A001",
+      "course_id": "CS301",
+      "title": "AI Assignment 2 - CSP Implementation",
+      "due_date": "2026-05-05",
+      "date": 12,
+      "day_name": "Tuesday",
+      "start_time": "18:30",
+      "end_time": "19:00",
+      "priority_score": 0.7
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS301",
+      "title": "AI Assignment 2 - CSP Implementation",
+      "due_date": "2026-05-05",
+      "date": 12,
+      "day_name": "Tuesday",
+      "start_time": "19:00",
+      "end_time": "19:30",
+      "priority_score": 0.7
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS301",
+      "title": "AI Assignment 2 - CSP Implementation",
+      "due_date": "2026-05-05",
+      "date": 12,
+      "day_name": "Tuesday",
+      "start_time": "19:30",
+      "end_time": "20:00",
+      "priority_score": 0.7
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS301",
+      "title": "AI Assignment 2 - CSP Implementation",
+      "due_date": "2026-05-05",
+      "date": 12,
+      "day_name": "Tuesday",
+      "start_time": "20:00",
+      "end_time": "20:30",
+      "priority_score": 0.7
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS301",
+      "title": "AI Assignment 2 - CSP Implementation",
+      "due_date": "2026-05-05",
+      "date": 12,
+      "day_name": "Tuesday",
+      "start_time": "20:30",
+      "end_time": "21:00",
+      "priority_score": 0.7
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS301",
+      "title": "AI Assignment 2 - CSP Implementation",
+      "due_date": "2026-05-05",
+      "date": 12,
+      "day_name": "Tuesday",
+      "start_time": "21:00",
+      "end_time": "21:30",
+      "priority_score": 0.7
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS301",
+      "title": "AI Assignment 2 - CSP Implementation",
+      "due_date": "2026-05-05",
+      "date": 12,
+      "day_name": "Tuesday",
+      "start_time": "21:30",
+      "end_time": "22:00",
+      "priority_score": 0.7
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS301",
+      "title": "AI Assignment 2 - CSP Implementation",
+      "due_date": "2026-05-05",
+      "date": 12,
+      "day_name": "Tuesday",
+      "start_time": "22:00",
+      "end_time": "22:30",
+      "priority_score": 0.7
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS301",
+      "title": "AI Assignment 2 - CSP Implementation",
+      "due_date": "2026-05-05",
+      "date": 12,
+      "day_name": "Tuesday",
+      "start_time": "22:30",
+      "end_time": "23:00",
+      "priority_score": 0.7
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS301",
+      "title": "AI Assignment 2 - CSP Implementation",
+      "due_date": "2026-05-05",
+      "date": 13,
+      "day_name": "Wednesday",
+      "start_time": "18:30",
+      "end_time": "19:00",
+      "priority_score": 0.7
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS301",
+      "title": "AI Assignment 2 - CSP Implementation",
+      "due_date": "2026-05-05",
+      "date": 13,
+      "day_name": "Wednesday",
+      "start_time": "19:00",
+      "end_time": "19:30",
+      "priority_score": 0.7
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS301",
+      "title": "AI Assignment 2 - CSP Implementation",
+      "due_date": "2026-05-05",
+      "date": 13,
+      "day_name": "Wednesday",
+      "start_time": "19:30",
+      "end_time": "20:00",
+      "priority_score": 0.7
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 13,
+      "day_name": "Wednesday",
+      "start_time": "20:00",
+      "end_time": "20:30",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 13,
+      "day_name": "Wednesday",
+      "start_time": "20:30",
+      "end_time": "21:00",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 13,
+      "day_name": "Wednesday",
+      "start_time": "21:00",
+      "end_time": "21:30",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 13,
+      "day_name": "Wednesday",
+      "start_time": "21:30",
+      "end_time": "22:00",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 13,
+      "day_name": "Wednesday",
+      "start_time": "22:00",
+      "end_time": "22:30",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 13,
+      "day_name": "Wednesday",
+      "start_time": "22:30",
+      "end_time": "23:00",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 14,
+      "day_name": "Thursday",
+      "start_time": "18:30",
+      "end_time": "19:00",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 14,
+      "day_name": "Thursday",
+      "start_time": "19:00",
+      "end_time": "19:30",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 14,
+      "day_name": "Thursday",
+      "start_time": "19:30",
+      "end_time": "20:00",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 14,
+      "day_name": "Thursday",
+      "start_time": "20:00",
+      "end_time": "20:30",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 14,
+      "day_name": "Thursday",
+      "start_time": "20:30",
+      "end_time": "21:00",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 14,
+      "day_name": "Thursday",
+      "start_time": "21:00",
+      "end_time": "21:30",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 14,
+      "day_name": "Thursday",
+      "start_time": "21:30",
+      "end_time": "22:00",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 14,
+      "day_name": "Thursday",
+      "start_time": "22:00",
+      "end_time": "22:30",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 14,
+      "day_name": "Thursday",
+      "start_time": "22:30",
+      "end_time": "23:00",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 15,
+      "day_name": "Friday",
+      "start_time": "18:30",
+      "end_time": "19:00",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 15,
+      "day_name": "Friday",
+      "start_time": "19:00",
+      "end_time": "19:30",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 15,
+      "day_name": "Friday",
+      "start_time": "19:30",
+      "end_time": "20:00",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 15,
+      "day_name": "Friday",
+      "start_time": "20:00",
+      "end_time": "20:30",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A002",
+      "course_id": "CS303",
+      "title": "OS Mid-Term Exam",
+      "due_date": "2026-05-07",
+      "date": 15,
+      "day_name": "Friday",
+      "start_time": "20:30",
+      "end_time": "21:00",
+      "priority_score": 0.672
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 15,
+      "day_name": "Friday",
+      "start_time": "21:00",
+      "end_time": "21:30",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 15,
+      "day_name": "Friday",
+      "start_time": "21:30",
+      "end_time": "22:00",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 15,
+      "day_name": "Friday",
+      "start_time": "22:00",
+      "end_time": "22:30",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 15,
+      "day_name": "Friday",
+      "start_time": "22:30",
+      "end_time": "23:00",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "18:30",
+      "end_time": "19:00",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "19:00",
+      "end_time": "19:30",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "19:30",
+      "end_time": "20:00",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "20:00",
+      "end_time": "20:30",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "20:30",
+      "end_time": "21:00",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "21:00",
+      "end_time": "21:30",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "21:30",
+      "end_time": "22:00",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "22:00",
+      "end_time": "22:30",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "22:30",
+      "end_time": "23:00",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "18:30",
+      "end_time": "19:00",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "19:00",
+      "end_time": "19:30",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A003",
+      "course_id": "CS302",
+      "title": "DB Lab Project - ER Diagram + Queries",
+      "due_date": "2026-05-10",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "19:30",
+      "end_time": "20:00",
+      "priority_score": 0.648
+    },
+    {
+      "assessment_id": "A004",
+      "course_id": "CS304",
+      "title": "SRS Document Submission",
+      "due_date": "2026-05-12",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "20:00",
+      "end_time": "20:30",
+      "priority_score": 0.628
+    },
+    {
+      "assessment_id": "A004",
+      "course_id": "CS304",
+      "title": "SRS Document Submission",
+      "due_date": "2026-05-12",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "20:30",
+      "end_time": "21:00",
+      "priority_score": 0.628
+    },
+    {
+      "assessment_id": "A004",
+      "course_id": "CS304",
+      "title": "SRS Document Submission",
+      "due_date": "2026-05-12",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "21:00",
+      "end_time": "21:30",
+      "priority_score": 0.628
+    },
+    {
+      "assessment_id": "A004",
+      "course_id": "CS304",
+      "title": "SRS Document Submission",
+      "due_date": "2026-05-12",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "21:30",
+      "end_time": "22:00",
+      "priority_score": 0.628
+    },
+    {
+      "assessment_id": "A004",
+      "course_id": "CS304",
+      "title": "SRS Document Submission",
+      "due_date": "2026-05-12",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "22:00",
+      "end_time": "22:30",
+      "priority_score": 0.628
+    },
+    {
+      "assessment_id": "A004",
+      "course_id": "CS304",
+      "title": "SRS Document Submission",
+      "due_date": "2026-05-12",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "22:30",
+      "end_time": "23:00",
+      "priority_score": 0.628
+    },
+    {
+      "assessment_id": "A004",
+      "course_id": "CS304",
+      "title": "SRS Document Submission",
+      "due_date": "2026-05-12",
+      "date": 18,
+      "day_name": "Monday",
+      "start_time": "18:30",
+      "end_time": "19:00",
+      "priority_score": 0.628
+    },
+    {
+      "assessment_id": "A004",
+      "course_id": "CS304",
+      "title": "SRS Document Submission",
+      "due_date": "2026-05-12",
+      "date": 18,
+      "day_name": "Monday",
+      "start_time": "19:00",
+      "end_time": "19:30",
+      "priority_score": 0.628
+    },
+    {
+      "assessment_id": "A005",
+      "course_id": "HU101",
+      "title": "Technical Report Draft",
+      "due_date": "2026-05-15",
+      "date": 18,
+      "day_name": "Monday",
+      "start_time": "19:30",
+      "end_time": "20:00",
+      "priority_score": 0.502
+    },
+    {
+      "assessment_id": "A005",
+      "course_id": "HU101",
+      "title": "Technical Report Draft",
+      "due_date": "2026-05-15",
+      "date": 18,
+      "day_name": "Monday",
+      "start_time": "20:00",
+      "end_time": "20:30",
+      "priority_score": 0.502
+    },
+    {
+      "assessment_id": "A005",
+      "course_id": "HU101",
+      "title": "Technical Report Draft",
+      "due_date": "2026-05-15",
+      "date": 18,
+      "day_name": "Monday",
+      "start_time": "20:30",
+      "end_time": "21:00",
+      "priority_score": 0.502
+    },
+    {
+      "assessment_id": "A005",
+      "course_id": "HU101",
+      "title": "Technical Report Draft",
+      "due_date": "2026-05-15",
+      "date": 18,
+      "day_name": "Monday",
+      "start_time": "21:00",
+      "end_time": "21:30",
+      "priority_score": 0.502
+    },
+    {
+      "assessment_id": "A005",
+      "course_id": "HU101",
+      "title": "Technical Report Draft",
+      "due_date": "2026-05-15",
+      "date": 18,
+      "day_name": "Monday",
+      "start_time": "21:30",
+      "end_time": "22:00",
+      "priority_score": 0.502
+    },
+    {
+      "assessment_id": "A005",
+      "course_id": "HU101",
+      "title": "Technical Report Draft",
+      "due_date": "2026-05-15",
+      "date": 18,
+      "day_name": "Monday",
+      "start_time": "22:00",
+      "end_time": "22:30",
+      "priority_score": 0.502
+    }
   ],
-  "study_hours_per_day": 4,
-  "preferred_study_window": {
-    "start_time": "18:00",
-    "end_time": "23:00"
+  "chat_history": [
+    {
+      "role": "assistant",
+      "message": "Aoa! I'm StudyPolice AI. Your OS mid-term is in 6 days and you're at 2.3 in that course. Want me to build your schedule?",
+      "timestamp": "2026-05-01T09:00:00"
+    },
+    {
+      "role": "user",
+      "message": "yes please build it",
+      "timestamp": "2026-05-01T09:01:00"
+    },
+    {
+      "role": "user",
+      "message": "I need to study for AI",
+      "timestamp": "2026-05-09T13:24:40.737684"
+    },
+    {
+      "role": "assistant",
+      "message": "To study for Artificial Intelligence (CS301), I recommend you focus on the upcoming assignment, \"AI Assignment 2 - CSP Implementation\" (A001), which is due on May 5, 2026. This assignment carries a weightage of 10% and is estimated to require 6 hours of work.\n\nConsidering your current GPA in CS301 is 2.5, and your target GPA is 3.5, it's essential to perform well in this assignment. I suggest you allocate dedicated time to review the course material, practice problems, and work on the assignment.\n\nGiven your overall CGPA of 2.8, it's crucial to balance your study time for CS301 with your other courses, such as Database Systems (CS302), Operating Systems (CS303), Software Engineering (CS304), and Technical Writing (HU101).\n\nTo make the most of your study time, I recommend creating a schedule that allows you to work on the AI assignment in focused blocks, with regular breaks to review and practice other course material. Don't forget to also prepare for the other upcoming assessments, such as the OS Mid-Term Exam (A002) on May 7, 2026.\n\nLet's break down your study plan for CS301:\n\n1. Review the course material, focusing on the topics relevant to the assignment.\n2. Practice problems and past assignments to reinforce your understanding.\n3. Allocate dedicated time to work on the assignment, aiming to complete it well before the deadline.\n4. Regularly review and adjust your study plan to ensure you're on track to meet your target GPA.\n\nBy following this plan, you'll be well-prepared for the AI assignment and can make progress towards achieving your target GPA in CS301. How does this sound? Would you like to discuss any specific challenges or areas of concern you're facing in CS301?",
+      "timestamp": "2026-05-09T13:24:40.737684"
+    },
+    {
+      "role": "user",
+      "message": "Recommend a netflix show hehe",
+      "timestamp": "2026-05-09T13:25:15.633958"
+    },
+    {
+      "role": "assistant",
+      "message": "Kuch bhi, let's get real for a second. I know you're procrastinating, and I'm not here to enable your binge-watching habits... yet. But since you asked, I'll give you a quick Netflix show recommendation. Have you seen \"Schitt's Creek\"? It's a hilarious show that's all about perseverance and growth, kind of like what you need to do with your grades.\n\nNow, back to reality. Your CGPA is 2.8, and you're in your 4th semester. It's time to step up your game, especially in courses like Artificial Intelligence (CS301) where you're currently at 2.5 GPA. You've got an assignment due on May 5th for CS301, and an OS Mid-Term Exam on May 7th. Don't even get me started on your Operating Systems (CS303) grade - 2.3 GPA is not going to cut it.\n\nYou've got a lot on your plate, but I know you can do better. So here's the deal. Take a 30-minute break to watch an episode of \"Schitt's Creek\" (I recommend Season 1, Episode 1), and then get back to work. You've got assignments to finish, exams to study for, and a Technical Report Draft due on May 15th for HU101. Let's get those grades up, Kuch bhi! You can do this!",
+      "timestamp": "2026-05-09T13:25:15.633958"
+    },
+    {
+      "role": "user",
+      "message": "i dont wanna study",
+      "timestamp": "2026-05-12T07:49:29.964096"
+    },
+    {
+      "role": "assistant",
+      "message": "Kuch bhi, Kuch bhi, it seems like you're trying to win the award for \"Most Creative Excuses for Not Studying\" with a CGPA of 2.8. I mean, I've seen better grades on a pizza box.\n\nListen, I know you're in your 4th semester, and you've got some tough courses like Artificial Intelligence (CS301) with a current GPA of 2.5, and Operating Systems (CS303) with a GPA of 2.3. But, come on, you can't just give up now! You've got assessments lined up, like the AI Assignment 2 - CSP Implementation (A001) due on May 5th, and the OS Mid-Term Exam (A002) on May 7th. Don't you think it's time to trade in your procrastination badge for a \"I'm a responsible student\" badge?\n\nAnd, let's be real, you're not exactly acing all your courses. I mean, you've got a target GPA of 3.5 for CS301, but you're currently at 2.5. That's like trying to reach the moon with a paper airplane. And don't even get me started on CS303, where you're aiming for 3.0, but you're stuck at 2.3. It's like you're trying to build a bridge with playing cards.\n\nBut, here's the thing: you're not a lost cause, Kuch bhi! You've got some strengths, like that 3.7 GPA in Technical Writing (HU101). That's like a shining star in a sea of... well, not-so-shining stars.\n\nSo, here's the deal. I want you to take a deep breath, put on your favorite studying playlist (or, you know, just put on some music that won't put you to sleep), and get to work. You've got this! You can do it! And, if you don't, well... let's just say you might be singing a different tune come exam time.\n\nSo, what's it gonna be, Kuch bhi? Are you gonna step up your game, or are you gonna let your grades slip further? The choice is yours. But, if you don't get moving, you might just find yourself saying \"Kuch bhi\" to your academic dreams.",
+      "timestamp": "2026-05-12T07:49:29.964119"
+    }
+  ],
+  "settings": {
+    "study_mode": true,
+    "active_persona": "roast_engine",
+    "available_personas": [
+      "academic_advisor",
+      "crisis_planner",
+      "desi_parent",
+      "roast_engine"
+    ],
+    "study_hours_per_day": 4,
+    "preferred_study_window": {
+      "start_time": "18:00",
+      "end_time": "23:00"
+    },
+    "session_length_minutes": 30
   },
-  "session_length_minutes": 30
-},
-"enforcement": {
-  "study_mode_violations": 1,
-  "distraction_log": []
-},
-"session_meta": {
-  "current_date": "2026-05-01",
-  "last_updated": "2026-05-09T13:25:15.633958"
-},
-"persona_thresholds": {
-  "crisis_planner_days_remaining": 2,
-  "desi_parent_violations_trigger": 3
-}
+  "enforcement": {
+    "study_mode_violations": 1,
+    "distraction_log": []
+  },
+  "session_meta": {
+    "current_date": "2026-05-01",
+    "last_updated": "2026-05-12T07:49:29.964121"
+  },
+  "persona_thresholds": {
+    "crisis_planner_days_remaining": 2,
+    "desi_parent_violations_trigger": 3
+  }
 }

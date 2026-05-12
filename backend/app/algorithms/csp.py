@@ -16,7 +16,12 @@ def is_conflicting(slot: dict, block: dict) -> bool:
     if block["recurring"]:
         day_match = True  #if recurring 
     else:
-        day_match = block["date"] == slot["date"]#if the block sent has the same date as the slot
+        # block["date"] is "YYYY-MM-DD"; extract day number to compare with slot["date"]
+        try:
+            block_day = int(str(block["date"]).split("-")[-1]) if "-" in str(block["date"]) else int(block["date"])
+        except (ValueError, TypeError):
+            block_day = int(block["date"])
+        day_match = block_day == slot["date"]
     if not day_match:
         return False
     #if dates match now check if times overlap too

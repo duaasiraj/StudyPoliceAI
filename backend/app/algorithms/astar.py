@@ -58,6 +58,7 @@ def run_astar(
                 "assessment_id": assessment["assessment_id"],
                 "course_id": assessment["course_id"],
                 "title": assessment["title"],
+                "due_date": assessment["due_date"],
                 "date": slot["date"],
                 "day_name": slot["day_name"],
                 "start_time": slot["start_time"],
