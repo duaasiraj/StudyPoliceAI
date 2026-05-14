@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
 
 const NAV = [
-  { id: 'landing', label: 'Home' },
-  { id: 'chat', label: 'Chat' },
-  { id: 'dashboard', label: 'Dashboard' },
-  { id: 'schedule', label: 'Schedule' },
-  { id: 'assessments', label: 'Assessments' },
-  { id: 'calendar', label: 'Calendar' },
-  { id: 'settings', label: 'Settings' },
+  {id: 'landing', label: 'Home'},
+  {id: 'chat', label: 'Chat'},
+  {id: 'dashboard', label: 'Dashboard'},
+  {id: 'schedule', label: 'Schedule'},
+  {id: 'assessments', label: 'Assessments'},
+  {id: 'calendar', label: 'Calendar'},
+  {id: 'settings', label: 'Settings'},
 ]
 
 export default function Sidebar({ page, setPage }) {
@@ -25,9 +25,6 @@ export default function Sidebar({ page, setPage }) {
       <div className="sidebar-logo">
         StudyPolice AI
       </div>
-      <div className="sidebar-logo">
-        Kiun Nahein Hoti Parhai?
-      </div>
 
       <nav className="sidebar-nav">
         {NAV.map(item => (
@@ -43,7 +40,7 @@ export default function Sidebar({ page, setPage }) {
 
       <div className="sidebar-footer">
         <div className="study-mode">
-          Study mode: {studyMode ? 'On' : 'Off'}
+          Study mode: {studyMode ? 'On 🟢' : 'Off 🔴'}
         </div>
       </div>
     </aside>
