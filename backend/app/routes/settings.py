@@ -15,7 +15,13 @@ def toggle_study_mode():
     session["settings"]["study_mode"] = not current
     save_session(session)
     return {"study_mode": session["settings"]["study_mode"]}
-
+@router.get("/study-mode")
+def get_study_mode():
+    session = get_session()
+    return {
+        "study_mode": session["settings"]["study_mode"],
+        "violations": session["enforcement"]["study_mode_violations"]
+    }
 @router.patch("/persona")
 def set_persona(body: PersonaUpdate):
     session = get_session()
