@@ -21,8 +21,7 @@ def generate_full_schedule() -> dict:
         # Step 2: AC-3 — prune conflicting slots
         available_slots = run_ac3(all_slots, booked_blocks)
         # Step 3: A* — assign slots to assessments by priority
-        schedule = run_astar(available_slots, assessments, courses, today)
-        # Step 4: Clear old linked_schedule_slots on ALL assessments
+        schedule = run_astar(available_slots,assessments,courses,today,max_hours_per_day=settings.get("study_hours_per_day", 4))        # Step 4: Clear old linked_schedule_slots on ALL assessments
         for assessment in session["assessments"]:
             assessment["linked_schedule_slots"] = []
 
