@@ -31,9 +31,11 @@ def list_assessments():
 @router.post("/")
 def add_assessment(assessment: NewAssessment):
     session = get_session()
-    # Generate a new ID based on how many assessments exist
-    count = len(session["assessments"]) + 1
-    new_id = f"A{count:03d}"
+    existing_ids = {a["assessment_id"] for a in session["assessments"]}
+    counter = 1
+    while f"A{counter:03d}" in existing_ids:
+        counter += 1
+    new_id = f"A{counter:03d}"
     new_entry = {
         "assessment_id": new_id,
         "completed": False,

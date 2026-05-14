@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.services.session_service import get_session, save_session
 import uuid
-
+from app.algorithms.csp import time_to_minutes
 router = APIRouter()
 
 class NewCalendarBlock(BaseModel):
@@ -24,6 +24,8 @@ def add_block(block: NewCalendarBlock):
     session = get_session()
     # Use a short uuid suffix so IDs are always unique even after deletions
     unique_id = f"CB-{uuid.uuid4().hex[:8].upper()}"
+    if time_to_minutes(block.end_time) <= time_to_minutes(block.start_time):
+        raise HTTPException(status_code=400, detail="end_time must be after start_time")
     new_block = {
         "block_id": unique_id,
         **block.model_dump()

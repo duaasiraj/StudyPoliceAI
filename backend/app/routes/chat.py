@@ -13,14 +13,14 @@ class ChatMessage(BaseModel):
 @router.post("/")
 async def chat(body: ChatMessage):
     try:
-        session = get_session()        
+        session = get_session()
         study_mode = session["settings"]["study_mode"]
-        if study_mode:
-            is_academic = _is_academic_message(body.message)
-            if not is_academic:
-                session["settings"]["active_persona"] = "roast_engine"
-                session["enforcement"]["study_mode_violations"] += 1
-        ai_response = await call_gemini(body.message, session)
+        # Determine effective persona without touching session
+        effective_persona = _get_effective_persona(session, body.message, study_mode)
+        # Only increment violations if actually being roasted
+        if study_mode and not _is_academic_message(body.message):
+            session["enforcement"]["study_mode_violations"] += 1
+        ai_response = await call_gemini(body.message, session, override_persona=effective_persona)
         session["chat_history"].append({
             "role": "user",
             "message": body.message,
@@ -31,34 +31,70 @@ async def chat(body: ChatMessage):
             "message": ai_response,
             "timestamp": datetime.now().isoformat()
         })
-        
+
         session["session_meta"]["last_updated"] = datetime.now().isoformat()
         save_session(session)
-        
         return {
             "response": ai_response,
-            "persona_used": session["settings"]["active_persona"],
+            "persona_used": effective_persona,
             "study_mode": study_mode
         }
-        
+
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
+def _get_effective_persona(session: dict, message: str, study_mode: bool) -> str:
+    # Study mode violation: off-topic message while study mode is on
+    if study_mode and not _is_academic_message(message):
+        return "roast_engine"
+    # Crisis mode: scheduler has loaded the student with >6 hours total
+    if _is_in_crisis(session):
+        return "crisis_planner"
+    # Default: whatever the user has selected
+    return session["settings"]["active_persona"]
+
+
+def _is_in_crisis(session: dict) -> bool:
+    """
+    Crisis triggers when the generated schedule has more than 6 hours
+    of study assigned across all incomplete assessments.
+    """
+    schedule = session.get("generated_schedule", [])
+    if not schedule:
+        return False
+    # Get IDs of incomplete assessments
+    incomplete_ids = {
+        a["assessment_id"]
+        for a in session.get("assessments", [])
+        if not a["completed"]
+    }
+    # Count slots (each = 30 min) belonging to incomplete assessments
+    total_slots = sum(
+        1 for entry in schedule
+        if entry["assessment_id"] in incomplete_ids
+    )
+    total_hours = total_slots * 0.5
+    return total_hours > 6
+
+
 def _is_academic_message(message: str) -> bool:
-    """
-    Simple keyword check to detect if a message is study-related.
-    Not AI — just a fast keyword scan. Good enough for demo purposes.
-    """
+    msg = message.lower()
+
+    off_topic_signals = [
+        "netflix", "youtube", "game", "movie", "food", "hungry",
+        "bored", "tired", "meme", "tiktok", "instagram",
+        "don't wanna", "dont wanna", "don't want to", "dont want to"
+    ]
+    if any(kw in msg for kw in off_topic_signals):
+        return False
+
     academic_keywords = [
         "study", "exam", "assignment", "deadline", "gpa", "course",
         "lecture", "quiz", "project", "schedule", "grade", "marks",
-        "help", "explain", "understand", "homework", "submission"
+        "help", "explain", "understand", "homework", "submission",
+        "error", "code", "concept", "topic", "chapter", "notes"
     ]
-    message_lower = message.lower()
-    return any(
-        keyword in message_lower
-        for keyword in academic_keywords
-    )
+    return any(kw in msg for kw in academic_keywords)
