@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.services.session_service import get_session, save_session
 import uuid
-
+from algorithms.csp import time_to_minutes 
 router = APIRouter()
 
 class NewCalendarBlock(BaseModel):
@@ -28,6 +28,8 @@ def add_block(block: NewCalendarBlock):
         "block_id": unique_id,
         **block.model_dump()
     }
+    if time_to_minutes(block.end_time) <= time_to_minutes(block.start_time):
+        raise HTTPException(status_code=400, detail="end_time must be after start_time")
     session["calendar"]["booked_blocks"].append(new_block)
     save_session(session)
     return {"message": "Block added", "block": new_block}
