@@ -10,15 +10,8 @@ const NAV = [
   {id: 'settings', label: 'Settings'},
 ]
 
-export default function Sidebar({ page, setPage }) {
-  const [studyMode, setStudyMode] = useState(false)
-
-  useEffect(() => {
-    fetch('http://localhost:8000/api/settings/')
-      .then(r => r.json())
-      .then(d => setStudyMode(d.study_mode))
-      .catch(() => {})
-  }, [])
+export default function Sidebar({ page, setPage, studyMode }) {
+  
 
   return (
     <aside className="sidebar">
