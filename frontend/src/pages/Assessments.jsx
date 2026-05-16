@@ -1,321 +1,252 @@
 import {useState, useEffect} from 'react'
 
-const empty_form = {
-
-    course_id: '',
-    title: '',
-    type: 'assignment',
-    due_date: '', 
-    weightage: '',
-    estimated_hours: ''
+const EMPTY_FORM = {
+  course_id: '',
+  title: '',
+  type: 'assignment',
+  due_date: '',
+  weightage: '',
+  estimated_hours: ''
 }
 
-const TYPE_COLOR = { 
-    exam: 'badge-red', 
-    assignment: 'badge-blue', 
-    project: 'badge-purple', 
-    quiz: 'badge-yellow' 
-}
+export default function Assessments() {
+  const [assessments, setAssessments] = useState([])
+  const [courses,setCourses] = useState([])
+  const [loading,setLoading]= useState(true)
+  const [submitting,setSubmitting]  = useState(false)
+  const [error,setError]= useState(null)
+  const [showForm,setShowForm]= useState(false)
+  const [form,setForm]= useState(EMPTY_FORM)
+  const [filter,setFilter]= useState('all')
 
+  async function load() {
 
-export default function Assessments(){
+    setLoading(true)
+    try {
+      const [aRes, cRes] = await Promise.all([
+        fetch('http://localhost:8000/api/session/assessments'),
+        fetch('http://localhost:8000/api/session/courses'),
+      ])
 
-    const [assessments, setAssessments] = useState([])
-    const [courses, setCourses] = useState([])
+      setAssessments(await aRes.json())
+      setCourses(await cRes.json())
 
-    const [loading, setLoading] = useState(true)
-    const [submitting, setSubmitting] = useState(false)
-    const [error, setError] = useState(null)
-
-    const [showForm, setShowForm] = useState(false)
-    const [form, setForm] = useState(empty_form)
-
-    const [filter, setFilter] = useState('all')
-
-    const load = async () =>{
-
-            setLoading(true)
-            try{
-
-                const [assessmentResult, courseResult] = await Promise.all([
-                fetch('http://localhost:8000/api/session/assessments'),
-                fetch('http://localhost:8000/api/session/courses')
-                ])
-                setAssessments(await assessmentResult.json())
-                setCourses(await courseResult.json())
-
-
-            }catch{
-
-                setError('Could not load assessments')
-
-            }finally{
-                setLoading(false)
-            }
-        }
-
-    useEffect(()=>{
-
-        load()
-
-    }, [])
-
-
-    const submit = async(e)=>{
-
-        e.preventDefault()
-
-        setSubmitting(true)
-        setError(null)
-
-        try{
-
-            const data = {
-                ...form,
-                weightage: Number(form.weightage),
-                estimated_hours: Number(form.estimated_hours)
-            }
-
-
-            const res = await fetch('http://localhost:8000/api/assessments',{
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-                }
-            )
-
-            if(!res.ok){
-                throw new Error('Failed to add')
-            }
-
-            setForm(empty_form)
-            setShowForm(false)
-            await load()
-
-        }catch{
-            setError('Could not add assessment')
-        }finally{
-            setSubmitting(false)
-        }
-
+    } catch {
+      setError('Could not load assessments.')
+    } finally {
+      setLoading(false)
     }
+  }
 
-    const complete = async(id)=>{
+  useEffect(() => { load() }, [])
 
-        try{    
+  async function submit(e) {
 
-            await fetch(`http://localhost:8000/api/assessments/${id}/complete`,{
-                method: 'PATCH'
-            })
+    e.preventDefault()
+    setSubmitting(true)
+    setError(null)
 
-            const updatedAssessment = assessments.map((assessment)=>{
-
-                if(assessment.assessment_id === id){
-                    return {...assessment, completed: true}
-                }else{
-                    return assessment
-                }
-
-            })
-
-            setAssessments(updatedAssessment)
-
-        }catch{
-            setError('Could not mark assessment as complete')
-        }
+    try {
+      const res = await fetch('http://localhost:8000/api/assessments/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          ...form,
+          weightage: Number(form.weightage),
+          estimated_hours: Number(form.estimated_hours)
+        })
+      })
+      if (!res.ok) throw new Error()
+      setForm(EMPTY_FORM)
+      setShowForm(false)
+      await load()
+    } catch {
+      setError('Could not add assessment.')
+    } finally {
+      setSubmitting(false)
     }
+  }
 
-    const del = async(id)=>{
+  async function complete(id) {
+    try {
 
-        const userConfirmed = confirm('Delete this assessment?')
-        if(!userConfirmed){
-            return
-        }
+      await fetch(`http://localhost:8000/api/assessments/${id}/complete`, {method: 'PATCH'})
 
-
-        try{    
-
-            await fetch(`http://localhost:8000/api/assessments/${id}`,{
-                method: 'DELETE'
-            })
-
-            const remaining = assessments.filter((assessment)=>{
-                return assessment.assessment_id !== id
-            })
-
-            setAssessments(remaining)
-
-        }catch{
-            setError('Could not delete')
-        }
-
+      setAssessments(prev => prev.map(a => a.assessment_id === id ? { ...a, completed: true} : a))
+    }catch {
+      setError('Could not mark as complete.')
     }
+  }
 
-    let filtered
+  async function del(id) {
+    if (!confirm('Delete this assessment?')) return
+    try {
+      await fetch(`http://localhost:8000/api/assessments/${id}`, {method: 'DELETE'})
+      setAssessments(prev => prev.filter(a => a.assessment_id !== id))
 
-    if(filter==='all'){
-        filtered = assessments
-    }else if(filter==='pending'){
-        filtered = assessments.filter((assessment)=>assessment.completed === false)
-    }else{
-        filtered = assessments.filter((assessment)=>assessment.completed === true)
+    } catch {
+      setError('Could not delete.')
     }
+  }
 
-    const notCompleted = assessments.filter((assessment)=>{
-        return assessment.completed ===false
-    })
+  const pending = assessments.filter(a => !a.completed).length
 
-    const pending = notCompleted.length
+  const filtered = filter === 'all'? assessments : filter === 'pending' ? assessments.filter(a => !a.completed) : assessments.filter(a =>  a.completed)
 
-    return(
+  return (
+    <div style={{padding: '36px', maxWidth: '800px'}}>
 
+      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px'}}>
 
-        <div className='page fade-up'>
-            {/* The banner */}
-            <div className='page-header'>
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px'}}>
+        <h1 style={{ fontFamily: 'var(--heading-font)', fontSize: '30px' }}>Assessments</h1>
 
-                    <div>
-                        <div className='page-title'>ASSESSMENTS</div>    
-                        <div className='page-subtitle'>{pending} pending || {assessments.length} total</div>
-                    </div>
+        <button className="btn" onClick={() => setShowForm(s => !s)}>
+          {showForm ? 'Cancel' : '+ Add'}
+        </button>
 
-                    <button className='btn btn-primary' onClick={()=>setShowForm(s => !s)}>
+      </div>
 
-                        {showForm ? 'X Cancel' : '+ Add Assessment'}
+      <p style={{fontFamily: 'var(--mono)', fontSize: '13px', color: '#8b93a7', marginBottom: '32px', marginTop: '-10px'}}>
+        {pending} pending || {assessments.length} total
+      </p>
 
-                    </button>
-                
-                </div>
+      {error && <div className="error-box" style={{marginBottom: '20px'}}>{error}</div>}
+
+      
+      {showForm && (
+        <div className="card" style={{marginBottom: '24px'}}>
+
+          <h2 style={{ fontFamily: 'var(--mono)', fontSize: '16px', marginBottom: '16px' }}>New Assessment</h2>
+
+          <form onSubmit={submit}>
+
+            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px'}}>
+              <div>
+
+                <label className="account-item-label">Course</label>
+
+                <select className="select" value={form.course_id} onChange={e => setForm(f => ({ ...f, course_id: e.target.value }))} required>
+
+                  <option value="">Select course...</option>
+
+                  {courses.map(c => <option key={c.course_id} value={c.course_id}>{c.course_id} — {c.name}</option>)}
+                </select>
+
+              </div>
+              <div>
+                <label className="account-item-label">Type</label>
+
+                <select className="select" value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))}>
+
+                  <option value="assignment">Assignment</option>
+                  <option value="exam">Exam</option>
+                  <option value="project">Project</option>
+                  <option value="quiz">Quiz</option>
+                </select>
+              </div>
             </div>
 
-            {/* Any error banner */}
+            <div style={{marginBottom: '12px', paddingRight: '15px'}}>
 
-            {error && <div className="error-banner" style={{marginBottom: '16px'}}>{error}</div>}
+              <label className="account-item-label">Title</label>
 
-
-            {/* New assessment form */}
-
-            {showForm && (
-
-                <div className="card" style={{marginBottom: '24px', borderColor: 'var(--accent-border)'}}>
-                    <div style={{ fontWeight: 700, color: 'var(--heading)', marginBottom: '16px', fontFamily: 'var(--mono)', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                        NEW ASSESSMENT
-                    </div>
-
-                    <form onSubmit={submit}>
-
-                        <div className="form-row form-grid-2" style={{marginBottom: '12px'}}>
-                            <div className="form-field">
-
-                                <label className="form-label">Course</label>
-
-                                <select className="select" value={form.course_id} onChange={e => setForm(f => ({ ...f, course_id: e.target.value }))} required>
-
-                                <option value="">Select course...</option>
-
-                                {courses.map(c => <option key={c.course_id} value={c.course_id}>{c.course_id} — {c.name}</option>)}
-
-                                </select>
-                            </div>
-
-                            <div className="form-field">
-                                <label className="form-label">Type</label>
-                                <select className="select" value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))}>
-
-                                <option value="assignment">Assignment</option>
-                                <option value="exam">Exam</option>
-                                <option value="project">Project</option>
-                                <option value="quiz">Quiz</option>
-                                </select>
-                            </div>
-
-                        </div>
-
-                        <div className="form-row" style={{ marginBottom: '12px' }}>
-                            <div className="form-field">
-                                <label className="form-label">Title</label>
-                                <input className="input" placeholder="e.g. Midterm Exam" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} required />
-                            </div>
-                        </div>
-                        <div className="form-row form-grid-3" style={{ marginBottom: '20px' }}>
-                            <div className="form-field">
-                                <label className="form-label">Due Date</label>
-                                <input className="input" type="date" value={form.due_date} onChange={e => setForm(f => ({ ...f, due_date: e.target.value }))} required />
-                            </div>
-                            <div className="form-field">
-                                <label className="form-label">Weightage (%)</label>
-                                <input className="input" type="number" min="1" max="100" placeholder="10" value={form.weightage} onChange={e => setForm(f => ({ ...f, weightage: e.target.value }))} required />
-                            </div>
-                            <div className="form-field">
-                                <label className="form-label">Est. Hours</label>
-                                <input className="input" type="number" min="1" placeholder="4" value={form.estimated_hours} onChange={e => setForm(f => ({ ...f, estimated_hours: e.target.value }))} required />
-                            </div>
-                        </div>
-                        <button className="btn btn-primary" type="submit" disabled={submitting}>
-                            {submitting ? <><div className="spinner" style={{ width: '14px', height: '14px', borderWidth: '2px', borderTopColor: '#fff' }} /> Adding...</> : '+ Add Assessment'}
-                        </button>
-
-                    </form>
-                </div>
-            )}
-
-
-            {/* Filter Tabs */}
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-                {['all', 'pending', 'done'].map(f => (
-
-                <button key={f} className={`btn btn-sm ${filter === f ? 'btn-primary' : ''}`} onClick={() => setFilter(f)}>
-                    {f === 'all' ? `All (${assessments.length})` : f === 'pending' ? `Pending (${pending})` : `Done (${assessments.length - pending})`}
-                </button>
-
-                ))}
+              <input className="input" placeholder="e.g. Midterm Exam" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} required/>
             </div>
 
-            {loading ? (
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'center', padding: '40px 0' }}><div className="spinner" /><span style={{ fontFamily: 'var(--mono)', color: 'var(--text)' }}>Loading...</span></div>
-            ) : filtered.length === 0 ? (
-                <div className="empty-state"><div className="empty-icon">📋</div><div className="empty-title">No assessments here</div></div>
-            ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {filtered.map(a => {
-                    const daysLeft = Math.ceil((new Date(a.due_date) - new Date()) / 86400000)
-                    const urgency = a.completed ? 'badge-green' : daysLeft <= 2 ? 'badge-red' : daysLeft <= 5 ? 'badge-yellow' : 'badge-muted'
-                    return (
-                    <div key={a.assessment_id} className="card" style={{
-                        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap',
-                        opacity: a.completed ? 0.6 : 1,
-                        borderColor: a.completed ? 'var(--border)' : undefined,
-                    }}>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', marginBottom: '4px' }}>
-                            <span style={{ fontWeight: 700, color: a.completed ? 'var(--text)' : 'var(--heading)', fontSize: '14px', textDecoration: a.completed ? 'line-through' : 'none' }}>
-                            {a.title}
-                            </span>
-                            <span className={`badge ${TYPE_COLOR[a.type] || 'badge-muted'}`}>{a.type}</span>
-                            {a.completed && <span className="badge badge-green">✓ Done</span>}
-                        </div>
-                        <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--text)' }}>
-                            {a.course_id} · Due {a.due_date} · {a.estimated_hours}h · {a.weightage}%
-                        </div>
-                        </div>
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0 }}>
-                        <span className={`badge ${urgency}`}>{a.completed ? '✓' : daysLeft <= 0 ? 'OVERDUE' : `${daysLeft}d`}</span>
-                        {!a.completed && (
-                            <button className="btn btn-sm btn-success" onClick={() => complete(a.assessment_id)}>✓ Done</button>
-                        )}
-                        <button className="btn btn-sm btn-danger" onClick={() => del(a.assessment_id)}>✕</button>
-                        </div>
-                    </div>
-                    )
-                })}
-                </div>
-            )}
+            <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', marginBottom: '20px',paddingRight: '15px'}}>
+              
+              <div>
+                <label className="account-item-label">Due Date</label>
+                <input className="input" style={{width:'80%'}} type="date" value={form.due_date} onChange={e => setForm(f => ({ ...f, due_date: e.target.value }))} required />
+              </div>
+              <div>
+                <label className="account-item-label">Weightage (%)</label>
+                <input className="input" style={{width:'80%'}} type="number" min="1" max="100" placeholder="10" value={form.weightage} onChange={e => setForm(f => ({ ...f, weightage: e.target.value }))} required />
+              </div>
+              <div>
+                <label className="account-item-label">Est. Hours</label>
+                <input className="input" style={{width:'80%'}} type="number" min="1" placeholder="4" value={form.estimated_hours} onChange={e => setForm(f => ({ ...f, estimated_hours: e.target.value }))} required />
+              </div>
+            </div>
 
-
-
+            <button className="btn btn-primary" type="submit" disabled={submitting}>
+              {submitting ? 'Adding...' : '+ Add Assessment'}
+            </button>
+          </form>
         </div>
-    )
+      )}
 
-} 
+      
 
+      <div style={{display: 'flex', gap: '8px', marginBottom: '16px'}}>
+
+        {[
+          { key: 'all',label: `All (${assessments.length})`},
+          { key: 'pending', label: `Pending (${pending})`},
+          { key: 'done',label: `Done (${assessments.length - pending})`},
+
+        ].map(f => (
+          <button
+            key={f.key}
+            className="btn"
+            onClick={() => setFilter(f.key)}
+            style={{ borderColor: filter === f.key ? 'var(--accent)' : 'var(--border)', color: filter === f.key ? 'var(--accent)' : 'var(--text)' }}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+    <div style={{minHeight: '300px'}}>
+      {filtered.length === 0 ? (
+        <div className="card" style={{color: '#8b93a7', fontFamily: 'var(--mono)', fontSize: '13px'}}>
+          No Assessments Here!
+        </div>
+
+      ) : (
+
+        <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
+
+          {filtered.map(a => {
+
+            const daysLeft = Math.ceil((new Date(a.due_date) - new Date())/86400000)
+            const urgencyColor = a.completed ? '#00e5a0' : daysLeft <= 2 ? '#ff4d6d' : daysLeft <= 5 ? '#ffd60a' : '#8b93a7'
+
+            return (
+
+              <div key={a.assessment_id} className="card" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap', opacity: a.completed ? 0.55 : 1}}>
+                
+                <div style={{flex: 1, minWidth: 0}}>
+                  <div style={{fontWeight: 600, fontSize: '14px', textDecoration: a.completed ? 'line-through' : 'none'}}>
+                    {a.title}
+                  </div>
+
+                  <div style={{fontFamily: 'var(--mono)', fontSize: '14px', color: '#8b93a7', marginTop: '3px'}}>
+                    {a.course_id}  {a.type}  {a.due_date}  {a.estimated_hours}h  {a.weightage}%
+                  </div>
+
+                </div>
+
+                <div style={{display: 'flex', gap: '8px', alignItems: 'center', flexShrink: 0}}>
+                  <span style={{fontFamily: 'var(--mono)', fontSize: '11px', color: urgencyColor}}>
+                    {a.completed ? 'Done' : daysLeft <= 0 ? 'Overdue' : `${daysLeft}d left`}
+                  </span>
+
+                  {!a.completed && (
+                    <button className="btn" style={{fontSize: '12px', padding: '5px 10px'}} onClick={() => complete(a.assessment_id)}>
+                      Mark done
+                    </button>
+                  )}
+                  <button className="btn" style={{fontSize: '12px', padding: '5px 10px', color: '#ff8080', borderColor: 'rgba(255,80,80,0.25)' }} onClick={() => del(a.assessment_id)}>
+                    Delete
+                  </button>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+    </div>
+  )
+}

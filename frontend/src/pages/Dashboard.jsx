@@ -1,188 +1,169 @@
 import { useState, useEffect } from 'react'
 
+export default function Dashboard() {
+  const [student, setStudent]= useState(null)
+  const [courses, setCourses]= useState([])
+  const [assessments, setAssessments] = useState([])
+  const [settings, setSettings]= useState(null)
+  const [loading, setLoading]= useState(true)
+  const [error, setError]= useState(null)
 
-const PERSONA_LABELS = {
-  academic_advisor:{label: 'Academic Advisor',color: 'badge-blue'},
-  crisis_planner:{label: 'Crisis Planner',color: 'badge-yellow'},
-  desi_parent: {label: 'Desi Parent',color: 'badge-purple'},
-  roast_engine: {label: 'Roast Engine',color: 'badge-red'},
-}
+  useEffect(() => {
+    Promise.all([
+      fetch('http://localhost:8000/api/session/student').then(r => r.json()),
+      fetch('http://localhost:8000/api/session/courses').then(r => r.json()),
+      fetch('http://localhost:8000/api/assessments/').then(r => r.json()),
+      fetch('http://localhost:8000/api/settings/').then(r => r.json()),
+    ]).then(([s, c, a, st]) => {
+      setStudent(s); setCourses(c); setAssessments(a); setSettings(st)
+    }).catch(() => setError('Could not load dashboard data'))
+      .finally(() => setLoading(false))
+  }, [])
 
+  const pending = assessments.filter(a => !a.completed)
+  const upcoming = pending.slice(0, 5)
 
-function RiskCard({course}){
+  return (
+    <div style={{padding: '36px', maxWidth: '900px'}}>
 
-    const gap = course.target_gpa - course.current_gpa
-    const risk = gap > 0.8 ? 'high' : gap > 0.3 ? 'medium' : 'low'
-    const riskColor = {high: 'badge-red', medium: 'badge-yellow', low: 'badge-green'}[risk]
-    const barPct = Math.min(100, (course.current_gpa / 4) * 100)
-    const diffColor = {hard: 'badge-red', medium: 'badge-yellow', easy: 'badge-green'}[course.difficulty]
+      <h1 style={{ fontFamily: 'var(--heading-font)', fontSize: '30px', marginBottom: '4px' }}>Dashboard</h1>
 
-    return(
+      
+      {student && (
+        <div style={{marginBottom: '32px'}}>
 
-        <div className="card" style={{display: 'flex', flexDirection: 'column', gap: '12px'}}>
+          <h2 style={{fontFamily: 'var(--mono)', fontSize: '16px', marginBottom: '10px'}}>Account</h2>
+
+          <div className="card account-grid" style = {{gap: '80px'}}>
+
+            <div className="account-item">
+              <span className="account-item-label">Name</span>
+              <span className="account-item-value">{student.name}</span>
+            </div>
+
+            <div className="account-item">
+              <span className="account-item-label">Student ID</span>
+              <span className="account-item-value">{student.student_id}</span>
+            </div>
             
-            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start'}}>
-                <div>
-                <div style={{fontFamily: 'var(--mono)', fontSize: '10px', color: 'var(--text)', marginBottom: '3px'}}>{course.course_id}</div>
-                <div style={{fontWeight: 700, color: 'var(--heading)', fontSize: '14px', lineHeight: 1.3}}>{course.name}</div>
-                </div>
-                <span className={`badge ${riskColor}`}>{risk} risk</span>
+            <div className="account-item">
+              <span className="account-item-label">Semester</span>
+              <span className="account-item-value">Semester {student.semester}</span>
             </div>
 
-            <div style={{display: 'flex', gap: '8px', flexWrap: 'wrap'}}>
-                <span className={`badge ${diffColor}`}>{course.difficulty}</span>
-                <span className="badge badge-muted">{course.credit_hours} cr</span>
+            <div className="account-item">
+              <span className="account-item-label">CGPA</span>
+              <span className="account-item-value">{student.cgpa.toFixed(2)}</span>
             </div>
 
-            <div>
-                <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '11px', fontFamily: 'var(--mono)', marginBottom: '6px' }}>
-                    <span style={{color: 'var(--text)' }}>Current GPA</span>
-                    <span style={{color: 'var(--heading)' }}>{course.current_gpa}<span style={{ color: 'var(--text)' }}>/ {course.target_gpa} target</span></span>
-                </div>
-                    <div style={{ height: '5px', background: 'var(--bg3)', borderRadius: '99px', overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: `${barPct}%`, background: risk === 'high' ? 'var(--accent)' : risk === 'medium' ? 'var(--yellow)' : 'var(--green)', borderRadius: '99px', transition: 'width 0.5s ease' }} />
-                </div>
+            <div className="account-item">
+              <span className="account-item-label">Pending</span>
+              <span className="account-item-value">{pending.length} assessments</span>
             </div>
 
+            <div className="account-item">
+              <span className="account-item-label">Courses</span>
+              <span className="account-item-value">{courses.length}</span>
+            </div>
+
+          </div>
 
         </div>
+      )}
 
-    )
+      
 
-}
+      <div style={{marginBottom: '32px'}}>
 
-export default function Dashboard(){
+        <h2 style={{fontFamily: 'var(--mono)', fontSize: '16px', marginBottom: '10px'}}>Course Risk</h2>
 
+        <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
 
-    const [student, setStudent] = useState(null)
-    const [courses, setCourses] = useState([])
-    const [assessments, setAssessments] = useState([])
-    const [settings, setSettings] = useState(null)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
+          {courses.map(c => {
+            const gap = c.target_gpa - c.current_gpa
+            const risk = gap > 0.8 ? 'High' : gap > 0.3 ? 'Medium' : 'Low'
+            const pct = Math.min(100, (c.current_gpa / 4) * 100)
+            const barColor = risk === 'High' ? '#ff4d6d' : risk === 'Medium' ? '#ffd60a' : '#00e5a0'
 
-    useEffect(() => {
-        setLoading(true)
-        Promise.all([
-        fetch('http://localhost:8000/api/session/student').then(r => r.json()),
-        fetch('http://localhost:8000/api/session/courses').then(r => r.json()),
-        fetch('http://localhost:8000/api/assessments/').then(r => r.json()),
-        fetch('http://localhost:8000/api/settings/').then(r => r.json()),
-        ]).then(([s, c, a, st]) => {
-        setStudent(s); setCourses(c); setAssessments(a); setSettings(st)
-        }).catch(() => setError('Could not load dashboard data'))
-        .finally(() => setLoading(false))
-    }, [])
+            return (
+              <div key={c.course_id} className="card" style={{display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap'}}>
 
+                <div style={{minWidth: '140px'}}>
 
-    const upcoming = assessments.filter(a => !a.completed).slice(0, 5)
-    const persona = settings ? PERSONA_LABELS[settings.active_persona] : null
+                  <div style={{fontFamily: 'var(--mono)',fontSize:'11px', color:'#8b93a7'}}>{c.course_id}</div>
+                  <div style={{ fontWeight: 600, fontSize: '14px' }}>{c.name}</div>
 
-    if (loading){
-        return <div className="page"><div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '40px' }}><div className="spinner" /><span style={{ fontFamily: 'var(--mono)', color: 'var(--text)' }}>Loading dashboard...</span></div></div>
-    }
-    
-    if (error){
-        return <div className="page"><div className="error-banner">{error}</div></div>
-    }
-
-    return(
-
-        <div className="page fade-up">
-
-            <div className="page-header">
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px'}}>
-                <div>
-                    <div className="page-title">Dashboard</div>
-                    <div className="page-subtitle">academic status overview</div>
                 </div>
-                {persona && <span className={`badge ${persona.color}`}>{persona.label}</span>}
-                </div>
-            </div>
 
+                <div style={{flex: 1, minWidth: '140px'}}>
 
-
-            {student && (
-
-                <div className="card-grid card-grid-3 mb-16" style={{ marginBottom: '20px' }}>
+                  <div style={{display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--mono)', fontSize: '11px', color: '#8b93a7', marginBottom: '4px'}}>
                     
-                    <div className="card" style={{ borderColor: 'var(--accent-border)' }}>
-                        <div style={{ fontSize: '11px', fontFamily: 'var(--mono)', color: 'var(--text)', marginBottom: '6px' }}>STUDENT</div>
-                        <div style={{ fontSize: '18px', fontWeight: 800, color: 'var(--heading)' }}>{student.name}</div>
-                        <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--text)', marginTop: '4px' }}>{student.student_id} || Sem {student.semester}</div>
-                    </div>
+                    <span>GPA: {c.current_gpa}</span>
+                    <span>Target: {c.target_gpa}</span>
 
+                  </div>
 
-                    <div className="card">
-                        <div style={{ fontSize: '11px', fontFamily: 'var(--mono)', color: 'var(--text)', marginBottom: '6px' }}>CGPA</div>
-                            <div style={{ fontSize: '32px', fontWeight: 800, color: student.cgpa >= 3.5 ? 'var(--green)' : student.cgpa >= 2.5 ? 'var(--yellow)' : 'var(--accent)', fontFamily: 'var(--mono)' }}>
-                            {student.cgpa.toFixed(2)}
-                            </div>
-                        <div style={{ fontSize: '11px', color: 'var(--text)' }}>{student.cgpa >= 3.5 ? '🎯 Looking good' : student.cgpa >= 2.5 ? '⚠️ Could be better' : '🚨 Critical zone'}</div>
-                    </div>
-
-                    <div className="card">
-                        <div style={{ fontSize: '11px', fontFamily: 'var(--mono)', color: 'var(--text)', marginBottom: '6px' }}>COURSES</div>
-                        <div style={{ fontSize: '32px', fontWeight: 800, color: 'var(--heading)', fontFamily: 'var(--mono)' }}>{courses.length}</div>
-                        <div style={{ fontSize: '11px', color: 'var(--text)' }}>{assessments.filter(a => !a.completed).length} pending assessments</div>
-                    </div>
-
+                  <div style={{height: '4px', background: 'var(--border)', borderRadius: '99px', overflow: 'hidden'}}>
+                    <div style={{height: '100%', width: `${pct}%`, background: barColor, borderRadius: '99px'}} />
+                  </div>
 
                 </div>
 
-            )}
-
-
-            <div style={{ marginBottom: '24px' }}>
-                <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--heading)', marginBottom: '12px', fontFamily: 'var(--mono)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                    Course Risk Analysis
+                <div style={{display: 'flex', gap: '8px', fontFamily: 'var(--mono)', fontSize: '11px'}}>
+                  <span style={{padding: '2px 8px', borderRadius: '4px', border: '1px solid var(--border)', color: '#8b93a7'}}>{c.difficulty}</span>
+                  <span style={{padding: '2px 8px', borderRadius: '4px', border: `1px solid ${barColor}44`, color: barColor}}>{risk} risk</span>
                 </div>
-                <div className="card-grid card-grid-3">
-                    {courses.map(c => <RiskCard key={c.course_id} course={c} />)}
-                </div>
-            </div>
-
-
-            <div>
-                <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--heading)', marginBottom: '12px', fontFamily: 'var(--mono)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                    Upcoming Deadlines
-                </div>
-                {upcoming.length === 0 ? (
-                    <div className="card"><span style={{ color: 'var(--green)', fontFamily: 'var(--mono)', fontSize: '13px' }}>No pending assessments</span></div>
-                ) : (
-                    <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-                        {upcoming.map(a => {
-                        const daysLeft = Math.ceil((new Date(a.due_date) - new Date())/86400000)
-
-                        const urgency = daysLeft <= 2 ? 'badge-red' : daysLeft <= 5 ? 'badge-yellow' : 'badge-green'
-
-                        const typeColor = {exam: 'badge-red', assignment: 'badge-blue', project: 'badge-purple'}[a.type] || 'badge-muted'
-
-                        return (
-                            <div key={a.assessment_id} className="card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap' }}>
-                                <div style={{ flex: 1 }}>
-                                    <div style={{ fontWeight: 600, color: 'var(--heading)', fontSize: '14px' }}>{a.title}</div>
-                                    <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--text)', marginTop: '3px' }}>{a.course_id} · {a.estimated_hours}h estimated · {a.weightage}% weight</div>
-                                </div>
-                                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-                                    <span className={`badge ${typeColor}`}>{a.type}</span>
-                                    <span className={`badge ${urgency}`}>{daysLeft <= 0 ? 'OVERDUE' : `${daysLeft}d left`}</span>
-                                </div>
-                            </div>
-                        )
-                        })}
-                    </div>
-                )}
-            </div>
-
-
-
-
+              </div>
+            )
+          })}
         </div>
 
+      </div>
 
 
-    )
+      <div>
+
+        <h2 style={{fontFamily: 'var(--mono)', fontSize: '16px', marginBottom: '10px'}}>Upcoming Deadlines</h2>
+        
+        {upcoming.length === 0 ? (
+
+          <div className="card" style={{ color: '#8b93a7', fontFamily: 'var(--mono)', fontSize: '13px' }}>
+            No pending assessments.
+          </div>
+
+        ) : (
+
+          <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
+
+            {upcoming.map(a => {
+              const daysLeft = Math.ceil((new Date(a.due_date) - new Date())/86400000)
+              const urgencyColor = daysLeft <= 2 ? '#ff4d6d' : daysLeft <= 5 ? '#ffd60a' : '#8b93a7'
+
+              return (
+                <div key={a.assessment_id} className="card" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap'}}>
+
+                  <div>
+
+                    <div style={{fontWeight: 600, fontSize: '14px' }}>{a.title}</div>
+                    <div style={{fontFamily: 'var(--mono)', fontSize: '11px', color: '#8b93a7', marginTop: '3px'}}>
+                      {a.course_id} {a.type} {a.weightage}%
+                    </div>
+
+                  </div>
+
+                  <div style={{fontFamily: 'var(--mono)', fontSize: '12px', color: urgencyColor, flexShrink: 0}}>
+                    {daysLeft <= 0 ? 'Overdue' : `${daysLeft}d left`}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
 
 
+      </div>
+
+    </div>
+  )
 }

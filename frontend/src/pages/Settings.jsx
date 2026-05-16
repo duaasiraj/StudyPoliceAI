@@ -1,194 +1,222 @@
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 
 const PERSONAS = [
-  {id: 'academic_advisor', icon: '🎓', label: 'Academic Advisor',desc: 'Calm, structured, evidence-based study guidance'},
-  {id: 'crisis_planner', icon: '🚨', label: 'Crisis Planner', desc: 'Emergency mode — tight deadlines, no fluff'},
-  {id: 'desi_parent',icon: '👨‍👩‍👧', label: 'Desi Parent', desc: 'Beta, padhai karo. Motivating but guilt-laden'},
-  {id: 'roast_engine',icon: '🔥', label: 'Roast Engine', desc: 'Brutal honesty. Off-topic = roasted'},
+  {
+    id: 'academic_advisor',
+    label: 'Academic Advisor',
+    desc: 'Structured guidance, references your actual deadlines and GPA gaps.',
+  },
+  {
+    id: 'crisis_planner',
+    label: 'Crisis Planner',
+    desc: 'Cuts the fluff. Useful when something is due in 48 hours.',
+  },
+  {
+    id: 'desi_parent',
+    label: 'Desi Parent',
+    desc: 'Guilt-driven motivation. Compares you to imaginary cousins.',
+  },
 ]
 
-export default function Settings(){
+export default function Settings({ studyMode, setStudyMode }) {
+  const [settings, setSettings] = useState(null)
+  const [student, setStudent] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [switchingPersona, setSwitchingPersona] = useState(null)
 
+  useEffect(() => {
+    async function load() {
+      try {
+        const [settingsRes, studentRes] = await Promise.all([
+          fetch('http://localhost:8000/api/settings/'),
+          fetch('http://localhost:8000/api/session/student'),
+        ])
 
-    const [settings, setSettings] = useState(null)
-    const [student, setStudent] = useState(null)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
-    const [togglingStudyMode, setTogglingStudyMode] = useState(false)
-    const [switchingPersona, setSwitchingPersona] = useState(null)
+        const settingsData = await settingsRes.json()
 
-
-    const load = async() => {
-
-        setLoading(true)
-
-        try{
-
-            const [sRes, stRes] = await Promise.all([
-                fetch('http://localhost:8000/api/settings/'),
-                fetch('http://localhost:8000/api/session/student'),
-            ])
-            setSettings(await sRes.json())
-            setStudent(await stRes.json())
-
-        }catch {
-            setError('Could not load settings')
-
-        }finally{
-            setLoading(false)
-        }
-
+        setSettings(settingsData)
+        setStudyMode(settingsData.study_mode)
+        setStudent(await studentRes.json())
+      } catch {
+        setError('Could not reach backend.')
+      } finally {
+        setLoading(false)
+      }
     }
 
+    load()
+  }, [])
 
-    useEffect(() => {load()}, [])
+  async function toggleStudyMode() {
+    try {
+      const res = await fetch(
+        'http://localhost:8000/api/settings/study-mode',
+        {method: 'PATCH'}
+      )
+
+      const data = await res.json()
+
+      setSettings(prev => ({
+        ...prev,
+        study_mode: data.study_mode,
+      }))
 
 
-    const toggleStudyMode = async() =>{
+      setStudyMode(data.study_mode)
+    } catch {
 
-        setTogglingStudyMode(true)
-        try{
-
-            const res = await fetch('http://localhost:8000/api/settings/study-mode', { method: 'PATCH' })
-            const data = await res.json()
-            setSettings(s => ({ ...s, study_mode: data.study_mode }))
-
-        }catch {
-            setError('Could not switch persona')
-
-        }finally{
-            setTogglingStudyMode(false)
-        }
-
+      setError('Could not update study mode.')
     }
+  }
 
+  async function switchPersona(id) {
+    setSwitchingPersona(id)
 
-    const switchPersona = async (persona) => {
-    setSwitchingPersona(persona)
-        try {
-            const res = await fetch(`http://localhost:8000/api/settings/persona?persona=${persona}`, { method: 'PATCH' })
-            const data = await res.json()
-            setSettings(s => ({ ...s, active_persona: data.active_persona }))
-        }catch{ 
-            setError('Could not switch persona') 
-        }finally{
-             setSwitchingPersona(null) 
-            }
+    try {
+      const res = await fetch(
+        `http://localhost:8000/api/settings/persona?persona=${id}`,
+        {method: 'PATCH'}
+      )
+
+      const data = await res.json()
+
+      setSettings(prev => ({
+        ...prev,
+        active_persona: data.active_persona,
+      }))
+    } catch {
+      setError('Could not switch persona.')
+    } finally {
+      setSwitchingPersona(null)
     }
+  }
 
-    if (loading){
-        return <div className="page"><div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginTop: '40px' }}><div className="spinner" /><span style={{ fontFamily: 'var(--mono)', color: 'var(--text)' }}>Loading settings...</span></div></div>
-    }
+  return (
+    <div className="settings-page">
 
+      <h1 style = {{fontFamily: 'var(--heading-font)', fontSize: '30px'}}>Settings</h1>
 
-    return(
+      <p style = {{fontFamily: 'var(--mono)', fontSize: '18px', marginTop: '-20px', marginBottom: '30px'}}>
+        Persona, study mode, and account info.
+      </p>
 
-        <div className="page fade-up">
+      {student && (
+        <div className="settings-section">
 
-            <div className="page-header">
-                <div className="page-title">Settings</div>
-                <div className="page-subtitle">// session configuration & persona selection</div>
+          <h2 style = {{fontFamily: 'var(--mono)', fontSize: '20px', marginBottom: '10px'}}>
+            Account
+          </h2>
+
+          <div className="card account-grid">
+
+            <div className="account-item">
+              <span className="account-item-label">Name</span>
+              <span className="account-item-value">{student.name}</span>
             </div>
 
+            <div className="account-item">
+              <span className="account-item-label">Student ID</span>
+              <span className="account-item-value">{student.student_id}</span>
+            </div>
 
-            {error && <div className="error-banner" style={{ marginBottom: '20px' }}>{error}</div>}
+            <div className="account-item">
+              <span className="account-item-label">Semester</span>
+              <span className="account-item-value">
+                Semester {student.semester}
+              </span>
+            </div>
 
+            <div className="account-item">
+              <span className="account-item-label">CGPA</span>
+              <span className="account-item-value">
+                {student.cgpa.toFixed(2)}
+              </span>
+            </div>
 
-            {student && (
-                <div style={{ marginBottom: '28px' }}>
-                    <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text)', marginBottom: '12px' }}>◆ Student Profile</div>
-                    <div className="card" style={{ display: 'flex', gap: '32px', flexWrap: 'wrap', borderColor: 'var(--accent-border)' }}>
-                        {[
-                        { label: 'NAME', value: student.name },
-                        { label: 'STUDENT ID', value: student.student_id },
-                        { label: 'SEMESTER', value: `Semester ${student.semester}` },
-                        { label: 'CGPA', value: student.cgpa.toFixed(2) },
-                        ].map(f => (
-                        <div key={f.label}>
-                            <div style={{ fontSize: '10px', fontFamily: 'var(--mono)', color: 'var(--text)', marginBottom: '4px', letterSpacing: '0.08em' }}>{f.label}</div>
-                            <div style={{ fontWeight: 700, color: 'var(--heading)', fontSize: '15px', fontFamily: f.label === 'CGPA' ? 'var(--mono)' : undefined }}>{f.value}</div>
-                        </div>
-                        ))}
-                    </div>
+          </div>
+        </div>
+      )}
+
+      {settings && (
+        <div className="settings-section">
+
+          <h2 style = {{fontFamily: 'var(--mono)', fontSize: '20px', marginBottom: '10px'}}>
+            Study Mode
+          </h2>
+
+          <div className="card">
+
+            <div className="study-row">
+
+              <div>
+                <div style={{fontweight: '600', marginBottom: '10px', fontFamily:'var(--mono)', fontSize: '16px'}}>
+                  {studyMode ? 'On' : 'Off'}
                 </div>
-            )}
 
-
-            {settings && (
-                <div style={{ marginBottom: '28px' }}>
-                    <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text)', marginBottom: '12px' }}>◆ Study Mode</div>
-                    <div className="card">
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-                            <div>
-                                <div style={{ fontWeight: 700, color: 'var(--heading)', fontSize: '15px', marginBottom: '4px' }}>
-                                {settings.study_mode ? '📚 Study Mode is ON' : '😴 Study Mode is OFF'}
-                                </div>
-                                <div style={{ fontSize: '13px', color: 'var(--text)' }}>
-                                {settings.study_mode
-                                    ? 'Off-topic messages will trigger the Roast Engine. Stay focused.'
-                                    : 'Chat freely. No enforcement active.'}
-                                </div>
-                            </div>
-                            <button
-                                className={`toggle${settings.study_mode ? ' on' : ''}`}
-                                onClick={!togglingStudyMode ? toggleStudyMode : undefined}
-                                style={{ opacity: togglingStudyMode ? 0.5 : 1 }}
-                            />
-                        </div>
-                        <div style={{ marginTop: '12px', padding: '10px 12px', background: 'var(--bg3)', borderRadius: '6px', fontFamily: 'var(--mono)', fontSize: '11px', color: 'var(--text)' }}>
-                        Preferred study window: {settings.preferred_study_window?.start_time} → {settings.preferred_study_window?.end_time} · {settings.session_length_minutes}min sessions
-                        </div>
-                    </div>
+                <div style = {{fontFamily: 'var(--mono)', fontSize: '13px'}}>
+                  {studyMode? 'Off-topic messages trigger the desi parent persona.':'Chat about anything. No enforcement.'}
                 </div>
-            )}
+              </div>
 
-            
-            {settings && (
-                <div>
-                <div style={{ fontFamily: 'var(--mono)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--text)', marginBottom: '12px' }}>◆ Active Persona</div>
-                    <div className="card-grid card-grid-2">
-                        {PERSONAS.map(p => {
-                        const isActive = settings.active_persona === p.id
-                        const isLoading = switchingPersona === p.id
-                        return (
-                            <div
-                            key={p.id}
-                            className="card"
-                            style={{
-                                cursor: 'pointer',
-                                borderColor: isActive ? 'var(--accent-border)' : 'var(--border)',
-                                background: isActive ? 'var(--accent-bg)' : 'var(--bg2)',
-                                transition: 'all 0.15s',
-                                opacity: isLoading ? 0.7 : 1,
-                            }}
-                            onClick={() => !isLoading && !isActive && switchPersona(p.id)}
-                            >
-                            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '8px' }}>
-                                <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
-                                <div style={{ fontSize: '28px' }}>{p.icon}</div>
-                                <div>
-                                    <div style={{ fontWeight: 700, color: 'var(--heading)', fontSize: '14px', marginBottom: '4px' }}>{p.label}</div>
-                                    <div style={{ fontSize: '12px', color: 'var(--text)', lineHeight: 1.5 }}>{p.desc}</div>
-                                </div>
-                                </div>
-                                {isActive && <span className="badge badge-red">ACTIVE</span>}
-                                {isLoading && <div className="spinner" style={{ width: '14px', height: '14px' }} />}
-                            </div>
-                            </div>
-                        )
-                        })}
-                    </div>
-                </div>
-            )}
+              <button
+                onClick={toggleStudyMode}
+                className={`toggle-btn ${studyMode ? 'on' : ''}`}
+              >
+                <span className="toggle-circle" />
+              </button>
+
+            </div>
+          </div>
+        </div>
+      )}
+
+      {settings && (
+        <div>
+
+          <h2 style = {{fontFamily: 'var(--mono)', fontSize: '20px', marginBottom: '10px'}}>
+            Persona
+          </h2>
 
 
+          <div className="persona-grid">
 
+            {PERSONAS.map(persona => {
+              const active = settings.active_persona === persona.id
+              const loading = switchingPersona === persona.id
 
+              return (
+                <button
+                  key={persona.id}
+                  onClick={() => !active && !loading && switchPersona(persona.id)}
+                  className={`persona-card ${active ? 'active' : ''}`}
+                >
 
+                  
 
+                    <span style ={{fontSize: '16px', fontWeight: '600', color:'var(--text)', marginBottom: '20px'}}>
+                      {persona.label}
+                    </span>
 
+                    {active && (
+                      <span style = {{fontSize: '14px',fontFamily: 'var(--mono)',color: 'var(--accent)', display:'block', marginTop: '12px'}}>
+                        ACTIVE
+                      </span>
+                    )}
+
+                  <div style = {{fontSize: '14px',fontFamily: 'var(--mono)',color: 'var(--text)', marginTop: '10px', lineHeight: '1.5'}}>
+                    {persona.desc}
+                  </div>
+
+                </button>
+              )
+            })}
+
+          </div>
 
         </div>
-    )
+      )}
 
+    </div>
+  )
 }

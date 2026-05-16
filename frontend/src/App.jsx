@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import {useState, useEffect} from 'react'
 import './index.css'
 import Sidebar from './components/Sidebar'
 import Landing from './pages/Landing'
@@ -22,15 +22,26 @@ const PAGES = {
 export default function App(){
 
   const [page, setPage] = useState('landing')
+
+  const [studyMode, setStudyMode] = useState(false)
+
+  useEffect(() => {
+
+      fetch('http://localhost:8000/api/settings/')
+      .then(r=>r.json())
+      .then(d=> setStudyMode(d.study_mode))
+      .catch(()=>{})
+  },[])
+
+
   const PageComponent = PAGES[page] || Landing
 
-  const isFullPage = page === 'chat' || page === 'landing'
   
   return (
     <div className="app-shell">
-      {page !== 'landing' && <Sidebar page={page} setPage={setPage} />}
+      {page !== 'landing' && <Sidebar page={page} setPage={setPage} studyMode={studyMode}/>}
       <div className={page !== 'landing' ? 'main-content' : ''} style={{ flex: 1, minWidth: 0 }}>
-        <PageComponent setPage={setPage} />
+        <PageComponent setPage={setPage} studyMode={studyMode} setStudyMode={setStudyMode}/>
       </div>
     </div>
   )
