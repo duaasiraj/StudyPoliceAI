@@ -78,71 +78,34 @@
       "due_date": "2026-05-15",
       "weightage": 20,
       "estimated_hours": 3,
-      "completed": false,
-      "linked_schedule_slots": [
-        {
-          "date": 14,
-          "day_name": "Thursday",
-          "start_time": "18:00",
-          "end_time": "18:30"
-        },
-        {
-          "date": 14,
-          "day_name": "Thursday",
-          "start_time": "18:30",
-          "end_time": "19:00"
-        },
-        {
-          "date": 14,
-          "day_name": "Thursday",
-          "start_time": "19:00",
-          "end_time": "19:30"
-        },
-        {
-          "date": 14,
-          "day_name": "Thursday",
-          "start_time": "19:30",
-          "end_time": "20:00"
-        },
-        {
-          "date": 14,
-          "day_name": "Thursday",
-          "start_time": "20:00",
-          "end_time": "20:30"
-        },
-        {
-          "date": 14,
-          "day_name": "Thursday",
-          "start_time": "20:30",
-          "end_time": "21:00"
-        }
-      ]
+      "completed": true,
+      "linked_schedule_slots": []
     },
     {
       "assessment_id": "A006",
       "completed": false,
       "linked_schedule_slots": [
         {
-          "date": 14,
-          "day_name": "Thursday",
+          "date": 17,
+          "day_name": "Sunday",
           "start_time": "18:00",
           "end_time": "18:30"
         },
         {
-          "date": 14,
-          "day_name": "Thursday",
+          "date": 17,
+          "day_name": "Sunday",
           "start_time": "18:30",
           "end_time": "19:00"
         },
         {
-          "date": 15,
-          "day_name": "Friday",
+          "date": 18,
+          "day_name": "Monday",
           "start_time": "18:00",
           "end_time": "18:30"
         },
         {
-          "date": 15,
-          "day_name": "Friday",
+          "date": 18,
+          "day_name": "Monday",
           "start_time": "18:30",
           "end_time": "19:00"
         }
@@ -153,132 +116,352 @@
       "due_date": "2026-05-28",
       "weightage": 2,
       "estimated_hours": 2
+    },
+    {
+      "assessment_id": "A001",
+      "completed": false,
+      "linked_schedule_slots": [
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "19:00",
+          "end_time": "19:30"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "19:30",
+          "end_time": "20:00"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "20:00",
+          "end_time": "20:30"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "20:30",
+          "end_time": "21:00"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "21:00",
+          "end_time": "21:30"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "21:30",
+          "end_time": "22:00"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "22:00",
+          "end_time": "22:30"
+        },
+        {
+          "date": 16,
+          "day_name": "Saturday",
+          "start_time": "22:30",
+          "end_time": "23:00"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "18:00",
+          "end_time": "18:30"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "18:30",
+          "end_time": "19:00"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "21:00",
+          "end_time": "21:30"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "21:30",
+          "end_time": "22:00"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "22:00",
+          "end_time": "22:30"
+        },
+        {
+          "date": 17,
+          "day_name": "Sunday",
+          "start_time": "22:30",
+          "end_time": "23:00"
+        }
+      ],
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "type": "exam",
+      "due_date": "2026-05-21",
+      "weightage": 50,
+      "estimated_hours": 7
     }
   ],
   "calendar": {
     "note": "Free slots are NOT stored here. They are computed at runtime by the CSP algorithm by finding gaps between booked blocks.",
     "booked_blocks": [
       {
-        "block_id": "CB-BD21B7A3",
-        "label": "study",
-        "date": "2026-05-12",
-        "start_time": "08:00",
-        "end_time": "10:00",
+        "block_id": "CB-DED88FD0",
+        "label": "AI lecture",
+        "date": "2026-05-15",
+        "start_time": "09:50",
+        "end_time": "14:10",
         "type": "class",
-        "recurring": true
+        "recurring": false
+      },
+      {
+        "block_id": "CB-F102FB86",
+        "label": "sleep",
+        "date": "2026-05-15",
+        "start_time": "00:00",
+        "end_time": "20:00",
+        "type": "sleep",
+        "recurring": false
+      },
+      {
+        "block_id": "CB-E93F64F4",
+        "label": "Sleep",
+        "date": "2026-05-16",
+        "start_time": "00:00",
+        "end_time": "19:00",
+        "type": "sleep",
+        "recurring": false
+      },
+      {
+        "block_id": "CB-3D81BFC6",
+        "label": "Sleep",
+        "date": "2026-05-17",
+        "start_time": "00:00",
+        "end_time": "08:00",
+        "type": "sleep",
+        "recurring": false
+      },
+      {
+        "block_id": "CB-5DA117AD",
+        "label": "fun",
+        "date": "2026-05-17",
+        "start_time": "19:00",
+        "end_time": "21:00",
+        "type": "class",
+        "recurring": false
       }
     ]
   },
   "generated_schedule": [
     {
-      "assessment_id": "A005",
-      "course_id": "HU101",
-      "title": "Technical Report Draft",
-      "due_date": "2026-05-15",
-      "date": 14,
-      "day_name": "Thursday",
-      "start_time": "18:00",
-      "end_time": "18:30",
-      "priority_score": 0.586
-    },
-    {
-      "assessment_id": "A005",
-      "course_id": "HU101",
-      "title": "Technical Report Draft",
-      "due_date": "2026-05-15",
-      "date": 14,
-      "day_name": "Thursday",
-      "start_time": "18:30",
-      "end_time": "19:00",
-      "priority_score": 0.586
-    },
-    {
-      "assessment_id": "A005",
-      "course_id": "HU101",
-      "title": "Technical Report Draft",
-      "due_date": "2026-05-15",
-      "date": 14,
-      "day_name": "Thursday",
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 16,
+      "day_name": "Saturday",
       "start_time": "19:00",
       "end_time": "19:30",
-      "priority_score": 0.586
+      "priority_score": 0.456
     },
     {
-      "assessment_id": "A005",
-      "course_id": "HU101",
-      "title": "Technical Report Draft",
-      "due_date": "2026-05-15",
-      "date": 14,
-      "day_name": "Thursday",
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 16,
+      "day_name": "Saturday",
       "start_time": "19:30",
       "end_time": "20:00",
-      "priority_score": 0.586
+      "priority_score": 0.456
     },
     {
-      "assessment_id": "A005",
-      "course_id": "HU101",
-      "title": "Technical Report Draft",
-      "due_date": "2026-05-15",
-      "date": 14,
-      "day_name": "Thursday",
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 16,
+      "day_name": "Saturday",
       "start_time": "20:00",
       "end_time": "20:30",
-      "priority_score": 0.586
+      "priority_score": 0.456
     },
     {
-      "assessment_id": "A005",
-      "course_id": "HU101",
-      "title": "Technical Report Draft",
-      "due_date": "2026-05-15",
-      "date": 14,
-      "day_name": "Thursday",
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 16,
+      "day_name": "Saturday",
       "start_time": "20:30",
       "end_time": "21:00",
-      "priority_score": 0.586
+      "priority_score": 0.456
     },
     {
-      "assessment_id": "A006",
-      "course_id": "CS301",
-      "title": "Quiz 2",
-      "due_date": "2026-05-28",
-      "date": 14,
-      "day_name": "Thursday",
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "21:00",
+      "end_time": "21:30",
+      "priority_score": 0.456
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "21:30",
+      "end_time": "22:00",
+      "priority_score": 0.456
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "22:00",
+      "end_time": "22:30",
+      "priority_score": 0.456
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 16,
+      "day_name": "Saturday",
+      "start_time": "22:30",
+      "end_time": "23:00",
+      "priority_score": 0.456
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 17,
+      "day_name": "Sunday",
       "start_time": "18:00",
       "end_time": "18:30",
-      "priority_score": 0.16
+      "priority_score": 0.456
     },
     {
-      "assessment_id": "A006",
-      "course_id": "CS301",
-      "title": "Quiz 2",
-      "due_date": "2026-05-28",
-      "date": 14,
-      "day_name": "Thursday",
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 17,
+      "day_name": "Sunday",
       "start_time": "18:30",
       "end_time": "19:00",
-      "priority_score": 0.16
+      "priority_score": 0.456
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "21:00",
+      "end_time": "21:30",
+      "priority_score": 0.456
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "21:30",
+      "end_time": "22:00",
+      "priority_score": 0.456
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "22:00",
+      "end_time": "22:30",
+      "priority_score": 0.456
+    },
+    {
+      "assessment_id": "A001",
+      "course_id": "CS303",
+      "title": "Final Exam",
+      "due_date": "2026-05-21",
+      "date": 17,
+      "day_name": "Sunday",
+      "start_time": "22:30",
+      "end_time": "23:00",
+      "priority_score": 0.456
     },
     {
       "assessment_id": "A006",
       "course_id": "CS301",
       "title": "Quiz 2",
       "due_date": "2026-05-28",
-      "date": 15,
-      "day_name": "Friday",
+      "date": 17,
+      "day_name": "Sunday",
       "start_time": "18:00",
       "end_time": "18:30",
-      "priority_score": 0.16
+      "priority_score": 0.184
     },
     {
       "assessment_id": "A006",
       "course_id": "CS301",
       "title": "Quiz 2",
       "due_date": "2026-05-28",
-      "date": 15,
-      "day_name": "Friday",
+      "date": 17,
+      "day_name": "Sunday",
       "start_time": "18:30",
       "end_time": "19:00",
-      "priority_score": 0.16
+      "priority_score": 0.184
+    },
+    {
+      "assessment_id": "A006",
+      "course_id": "CS301",
+      "title": "Quiz 2",
+      "due_date": "2026-05-28",
+      "date": 18,
+      "day_name": "Monday",
+      "start_time": "18:00",
+      "end_time": "18:30",
+      "priority_score": 0.184
+    },
+    {
+      "assessment_id": "A006",
+      "course_id": "CS301",
+      "title": "Quiz 2",
+      "due_date": "2026-05-28",
+      "date": 18,
+      "day_name": "Monday",
+      "start_time": "18:30",
+      "end_time": "19:00",
+      "priority_score": 0.184
     }
   ],
   "chat_history": [
@@ -441,11 +624,111 @@
       "role": "assistant",
       "message": "Kuch bhi, sharam nahi aati? Your CS303 grade is 2.3, and you're barely passing. \nComplete DB Lab Project tonight.",
       "timestamp": "2026-05-14T15:47:13.199760"
+    },
+    {
+      "role": "user",
+      "message": "lets study",
+      "timestamp": "2026-05-16T10:02:20.963006"
+    },
+    {
+      "role": "assistant",
+      "message": "1. What's on fire: DB Lab Project - ER Diagram + Queries and SRS Document Submission are overdue.\n2. Next 2 hours: Work on DB Lab Project - ER Diagram + Queries for CS302.\n3. Today: Finish DB Lab Project and start SRS Document Submission for CS304.",
+      "timestamp": "2026-05-16T10:02:20.963015"
+    },
+    {
+      "role": "user",
+      "message": "but thats overdue",
+      "timestamp": "2026-05-16T10:02:39.421868"
+    },
+    {
+      "role": "assistant",
+      "message": "Abbu se suna hai, DAWN news headline: \"24k-2424 Student Falls Behind in CS302 with 3.0 GPA\". \nWork on DB Lab Project now.",
+      "timestamp": "2026-05-16T10:02:39.421876"
+    },
+    {
+      "role": "user",
+      "message": "but the deadline has passed what the point now",
+      "timestamp": "2026-05-16T10:03:06.331835"
+    },
+    {
+      "role": "assistant",
+      "message": "1. What's on fire: DB Lab Project - ER Diagram + Queries and SRS Document Submission are overdue.\n2. Next 2 hours: Complete and submit DB Lab Project - ER Diagram + Queries for CS302, accept late penalty.\n3. Today: Complete and submit SRS Document Submission for CS304, accept late penalty.",
+      "timestamp": "2026-05-16T10:03:06.331843"
+    },
+    {
+      "role": "user",
+      "message": "should i not focus more on the assignement due tomorrow?",
+      "timestamp": "2026-05-16T10:03:34.764525"
+    },
+    {
+      "role": "assistant",
+      "message": "Sharma ji ka beta submitted his SRS Document yesterday, tu abhi tak overdue par hai. \nFinish SRS Document Submission for CS304 tonight.",
+      "timestamp": "2026-05-16T10:03:34.764532"
+    },
+    {
+      "role": "user",
+      "message": "but i wont have enough time to do the assignemen thas due tomorrow?",
+      "timestamp": "2026-05-16T10:04:11.164057"
+    },
+    {
+      "role": "assistant",
+      "message": "Neend aa rahi hai abhi, kal ke assignment ko bhool ja, pehle CS304 ka SRS Document Submission complete kar, 10% weightage ka nuksan toh utha hi lena hai.",
+      "timestamp": "2026-05-16T10:04:11.164073"
+    },
+    {
+      "role": "user",
+      "message": "but the teacher is not acceptin the srs now",
+      "timestamp": "2026-05-16T10:04:34.022974"
+    },
+    {
+      "role": "assistant",
+      "message": "Kya kar raha hai tu, CS304 ka SRS Document Submission late ho gaya, ab teacher bhi nahi accept karega. Move on, focus on tomorrow's assignment.",
+      "timestamp": "2026-05-16T10:04:34.022981"
+    },
+    {
+      "role": "user",
+      "message": "okay lets plan together what to do next",
+      "timestamp": "2026-05-16T10:04:51.992603"
+    },
+    {
+      "role": "assistant",
+      "message": "Theek hai, chalo plan banate hain. CS302 ka DB Lab Project - ER Diagram + Queries bhi due hai, aur usmein 15% weightage hai. Finish that first, then move to other tasks.",
+      "timestamp": "2026-05-16T10:04:51.992615"
+    },
+    {
+      "role": "user",
+      "message": "but that not getting accepted either",
+      "timestamp": "2026-05-16T10:05:14.815166"
+    },
+    {
+      "role": "assistant",
+      "message": "Sharam nahi aati, dono assignments late ho gaye, ab kya kar raha hai tu? CS302 ka DB Lab Project - ER Diagram + Queries aur CS304 ka SRS Document Submission, dono ko submit karne ka plan banate hain, phir teacher se baat karenge, shayad extension mil jaye. Abhi DB Lab Project - ER Diagram complete kar.",
+      "timestamp": "2026-05-16T10:05:14.815174"
+    },
+    {
+      "role": "user",
+      "message": "should i study?",
+      "timestamp": "2026-05-16T11:09:04.750546"
+    },
+    {
+      "role": "assistant",
+      "message": "CS303 ka Final Exam aane wala hai, 50% weightage hai, study karne ki zarurat hai, lekin pehle CS302 ka DB Lab Project - ER Diagram + Queries complete kar, 2 hours mein complete kar, phir study kar, aaj raat bhar study kar.",
+      "timestamp": "2026-05-16T11:09:04.750554"
+    },
+    {
+      "role": "user",
+      "message": "do you know about the spiderman movie",
+      "timestamp": "2026-05-16T11:09:17.958184"
+    },
+    {
+      "role": "assistant",
+      "message": "No time for movies. CS302 ka DB Lab Project - ER Diagram + Queries complete kar, next 2 hours. Today, finish DB Lab Project aur SRS Document Submission.",
+      "timestamp": "2026-05-16T11:09:17.958192"
     }
   ],
   "settings": {
-    "study_mode": true,
-    "active_persona": "academic_advisor",
+    "study_mode": false,
+    "active_persona": "desi_parent",
     "available_personas": [
       "academic_advisor",
       "crisis_planner",
@@ -460,12 +743,12 @@
     "session_length_minutes": 30
   },
   "enforcement": {
-    "study_mode_violations": 4,
+    "study_mode_violations": 10,
     "distraction_log": []
   },
   "session_meta": {
     "current_date": "2026-05-01",
-    "last_updated": "2026-05-14T15:47:13.199760"
+    "last_updated": "2026-05-16T11:09:17.958194"
   },
   "persona_thresholds": {
     "crisis_planner_days_remaining": 2,

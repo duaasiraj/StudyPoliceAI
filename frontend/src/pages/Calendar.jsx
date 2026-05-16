@@ -16,18 +16,9 @@ const BUILTIN_TYPES = {
   sleep:    { bg: 'rgba(150,150,180,0.08)', border: 'rgba(150,150,180,0.2)', dot: '#6b6b8a',  text: '#9898b0'  },
 }
 
-const CUSTOM_PALETTE = [
-  { dot: '#00e5a0', text: '#00e5a0', bg: 'rgba(0,229,160,0.10)',   border: 'rgba(0,229,160,0.30)'   },
-  { dot: '#f97316', text: '#fb923c', bg: 'rgba(249,115,22,0.10)',  border: 'rgba(249,115,22,0.30)'  },
-  { dot: '#e879f9', text: '#e879f9', bg: 'rgba(232,121,249,0.10)', border: 'rgba(232,121,249,0.30)' },
-  { dot: '#38bdf8', text: '#38bdf8', bg: 'rgba(56,189,248,0.10)',  border: 'rgba(56,189,248,0.30)'  },
-  { dot: '#fb7185', text: '#fb7185', bg: 'rgba(251,113,133,0.10)', border: 'rgba(251,113,133,0.30)' },
-  { dot: '#a3e635', text: '#a3e635', bg: 'rgba(163,230,53,0.10)',  border: 'rgba(163,230,53,0.30)'  },
-]
-
 const fallback = BUILTIN_TYPES.personal
 
-const EMPTY_FORM = { label: '', date: '', start_time: '08:00', end_time: '09:00', type: 'class', recurring: false }
+const EMPTY_FORM = { label: '', date: '', start_time: '', end_time: '', type: 'class', recurring: false }
 
 function getTypeStyle(type, customTypes) {
   if (BUILTIN_TYPES[type]) return BUILTIN_TYPES[type]
@@ -145,7 +136,7 @@ function DayModal({ day, month, year, blocks, customTypes, onClose, onDelete, on
                     </div>
                     <div style={{ fontSize: '14px', color: 'var(--heading)', fontWeight: 600 }}>{b.label}</div>
                     <div style={{ fontSize: '11px', color: 'var(--text)', textTransform: 'capitalize', marginTop: '3px' }}>
-                      {b.type}{b.recurring ? ' · recurring' : ''}
+                      {b.type}
                     </div>
                   </div>
                   <button
@@ -190,9 +181,8 @@ export default function Calendar() {
   const [error,       setError]       = useState(null)
   const [filter,      setFilter]      = useState('all')
   const [modalDay,    setModalDay]    = useState(null)
-  const [customTypes, setCustomTypes] = useState([])
-  const [newTypeName, setNewTypeName] = useState('')
-  const [showNewType, setShowNewType] = useState(false)
+  const [customTypes] = useState([])
+  const [timeError, setTimeError] = useState(null)
 
   const totalDays = daysInMonth(viewYear, viewMonth)
   const startDay  = firstWeekday(viewYear, viewMonth)
@@ -220,6 +210,22 @@ export default function Calendar() {
 
   const addBlock = async (e) => {
     e.preventDefault()
+    setTimeError(null)
+
+    // Time validation
+    if (!form.start_time) {
+      setTimeError('Please set a start time first.')
+      return
+    }
+    if (!form.end_time) {
+      setTimeError('Please set an end time.')
+      return
+    }
+    if (form.end_time <= form.start_time) {
+      setTimeError(`End time must be after start time (${form.start_time}).`)
+      return
+    }
+
     setSubmitting(true)
     setError(null)
     try {
@@ -238,6 +244,7 @@ export default function Calendar() {
       if (!res.ok) throw new Error()
       setForm(EMPTY_FORM)
       setShowForm(false)
+      setTimeError(null)
       await load()
     } catch {
       setError('Could not add block')
@@ -255,15 +262,6 @@ export default function Calendar() {
     } catch {
       setError('Could not delete block')
     }
-  }
-
-  const addCustomType = () => {
-    const trimmed = newTypeName.trim().toLowerCase().replace(/\s+/g, '_')
-    if (!trimmed || customTypes.find(c => c.value === trimmed)) return
-    const style = CUSTOM_PALETTE[customTypes.length % CUSTOM_PALETTE.length]
-    setCustomTypes(prev => [...prev, { value: trimmed, label: newTypeName.trim(), style }])
-    setNewTypeName('')
-    setShowNewType(false)
   }
 
   // Returns blocks that apply to a given day number in the viewed month/year
@@ -376,7 +374,7 @@ export default function Calendar() {
     }
   }
 
-  const allTypeKeys = ['all', ...Object.keys(BUILTIN_TYPES), ...customTypes.map(c => c.value)]
+  const allTypeKeys = ['all', ...Object.keys(BUILTIN_TYPES)]
   const yearOptions = buildYearOptions(thisYear)
 
   const goToPrevMonth = () => {
@@ -391,7 +389,7 @@ export default function Calendar() {
   }
 
   return (
-    <div className="page fade-up" style={{ maxWidth: '100%' }}>
+    <div className="page fade-up" style={{ maxWidth: '100%', padding: '60px 36px 36px' }}>
       {modalDay !== null && (
         <DayModal
           day={modalDay}
@@ -406,21 +404,23 @@ export default function Calendar() {
         />
       )}
 
-      {/* ── Compact toolbar: title · nav · actions all on one line ── */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '16px' }}>
-
-        {/* Title + subtitle stacked on the left */}
-        <div style={{ marginRight: '4px' }}>
-          <div className="page-title" style={{ margin: 0, lineHeight: 1.1 }}>Calendar</div>
-          <div className="page-subtitle" style={{ margin: 0, fontSize: '11px' }}>
-            // {MONTH_NAMES[viewMonth]} {viewYear} · {blocksThisMonth.length} blocks
-          </div>
+      {/* ── Header row: title left, actions right ── */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '4px' }}>
+        <h1 style={{ fontFamily: 'var(--heading-font)', fontSize: '30px', margin: 0, lineHeight: 1.1 }}>Calendar</h1>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <button className="btn btn-sm btn-primary" onClick={() => { setShowForm(s => { if (s) { setTimeError(null); setForm(EMPTY_FORM) } return !s }); }}>
+            {showForm ? '✕ Cancel' : '+ Add Block'}
+          </button>
+          {blocksThisMonth.length > 0 && (
+            <button className="btn btn-sm btn-danger" onClick={clearMonth}>Clear Month</button>
+          )}
         </div>
+      </div>
 
-        {/* Divider */}
-        <div style={{ width: '1px', height: '28px', background: 'var(--border2)', margin: '0 4px' }} />
+   
 
-        {/* Month / year nav */}
+      {/* ── Nav row ── */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '16px', marginTop: '32px' }}>
         <button className="btn btn-sm" onClick={goToPrevMonth} title="Previous month" style={{ padding: '5px 9px' }}>‹</button>
 
         <select
@@ -448,25 +448,8 @@ export default function Calendar() {
         <button className="btn btn-sm" onClick={goToNextMonth} title="Next month" style={{ padding: '5px 9px' }}>›</button>
 
         {!isCurrentMonth && (
-          <button
-            className="btn btn-sm"
-            onClick={() => { setViewYear(thisYear); setViewMonth(thisMonth); setModalDay(null) }}
-          >
+          <button className="btn btn-sm" onClick={() => { setViewYear(thisYear); setViewMonth(thisMonth); setModalDay(null) }}>
             Today
-          </button>
-        )}
-
-        {/* Divider */}
-        <div style={{ width: '1px', height: '28px', background: 'var(--border2)', margin: '0 4px' }} />
-
-        {/* Action buttons */}
-        <button className="btn btn-sm btn-primary" onClick={() => setShowForm(s => !s)}>
-          {showForm ? '✕ Cancel' : '+ Add Block'}
-        </button>
-
-        {blocksThisMonth.length > 0 && (
-          <button className="btn btn-sm btn-danger" onClick={clearMonth}>
-            Clear Month
           </button>
         )}
       </div>
@@ -491,45 +474,12 @@ export default function Calendar() {
                     onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
                     style={{ flex: 1 }}
                   >
-                    <optgroup label="Built-in">
-                      <option value="class">Class</option>
-                      <option value="lab">Lab</option>
-                      <option value="personal">Personal</option>
-                      <option value="sleep">Sleep</option>
-                    </optgroup>
-                    {customTypes.length > 0 && (
-                      <optgroup label="Custom">
-                        {customTypes.map(ct => (
-                          <option key={ct.value} value={ct.value}>{ct.label}</option>
-                        ))}
-                      </optgroup>
-                    )}
+                    <option value="class">Class</option>
+                    <option value="lab">Lab</option>
+                    <option value="personal">Personal</option>
+                    <option value="sleep">Sleep</option>
                   </select>
-                  <button
-                    type="button"
-                    className="btn btn-sm"
-                    onClick={() => setShowNewType(s => !s)}
-                    title="Add custom type"
-                    style={{ flexShrink: 0, padding: '0 12px', fontSize: '18px', lineHeight: 1 }}
-                  >
-                    +
-                  </button>
                 </div>
-                {showNewType && (
-                  <div style={{ display: 'flex', gap: '6px', marginTop: '8px' }}>
-                    <input
-                      className="input"
-                      placeholder="e.g. Prayer, Study Group"
-                      value={newTypeName}
-                      onChange={e => setNewTypeName(e.target.value)}
-                      onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addCustomType() } }}
-                      style={{ flex: 1 }}
-                    />
-                    <button type="button" className="btn btn-sm btn-primary" onClick={addCustomType} style={{ flexShrink: 0 }}>
-                      Add
-                    </button>
-                  </div>
-                )}
               </div>
             </div>
             <div className="form-row form-grid-3" style={{ marginBottom: '12px' }}>
@@ -539,19 +489,44 @@ export default function Calendar() {
               </div>
               <div className="form-field">
                 <label className="form-label">Start</label>
-                <input className="input" type="time" value={form.start_time} onChange={e => setForm(f => ({ ...f, start_time: e.target.value }))} required />
+                <input
+                  className="input"
+                  type="time"
+                  value={form.start_time}
+                  onChange={e => {
+                    setTimeError(null)
+                    setForm(f => ({ ...f, start_time: e.target.value, end_time: '' }))
+                  }}
+                  required
+                />
               </div>
               <div className="form-field">
                 <label className="form-label">End</label>
-                <input className="input" type="time" value={form.end_time} onChange={e => setForm(f => ({ ...f, end_time: e.target.value }))} required />
+                <input
+                  className="input"
+                  type="time"
+                  value={form.end_time}
+                  min={form.start_time || undefined}
+                  onChange={e => {
+                    setTimeError(null)
+                    if (!form.start_time) {
+                      setTimeError('Please select a start time first.')
+                      return
+                    }
+                    if (e.target.value && e.target.value <= form.start_time) {
+                      setTimeError(`End time must be after start time (${form.start_time}).`)
+                    }
+                    setForm(f => ({ ...f, end_time: e.target.value }))
+                  }}
+                  required
+                />
               </div>
             </div>
-            <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: '16px' }}>
-              <label className="toggle-wrap">
-                <div className={`toggle${form.recurring ? ' on' : ''}`} onClick={() => setForm(f => ({ ...f, recurring: !f.recurring }))} />
-                <span style={{ fontSize: '13px', color: 'var(--text2)' }}>Recurring (shows every day)</span>
-              </label>
-            </div>
+            {timeError && (
+              <div style={{ marginBottom: '10px', padding: '8px 12px', borderRadius: '6px', background: 'rgba(255,77,109,0.10)', border: '1px solid rgba(255,77,109,0.30)', color: '#ff4d6d', fontSize: '12px', fontFamily: 'var(--mono)' }}>
+                ⚠ {timeError}
+              </div>
+            )}
             <button className="btn btn-primary" type="submit" disabled={submitting}>
               {submitting ? 'Adding...' : '+ Add Block'}
             </button>
@@ -651,12 +626,6 @@ export default function Calendar() {
               <div key={type} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '3px 9px', background: s.bg, border: `1px solid ${s.border}`, borderRadius: '6px' }}>
                 <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: s.dot }} />
                 <span style={{ fontSize: '11px', fontFamily: 'var(--mono)', color: s.text, textTransform: 'capitalize' }}>{type}</span>
-              </div>
-            ))}
-            {customTypes.map(ct => (
-              <div key={ct.value} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '3px 9px', background: ct.style.bg, border: `1px solid ${ct.style.border}`, borderRadius: '6px' }}>
-                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: ct.style.dot }} />
-                <span style={{ fontSize: '11px', fontFamily: 'var(--mono)', color: ct.style.text }}>{ct.label}</span>
               </div>
             ))}
           </div>
