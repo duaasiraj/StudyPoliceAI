@@ -32,6 +32,9 @@ _DESI_ENFORCER_PROMPT = (
     "Example ending: 'Ab samajh aaya? CS302 mein 3.0 chahiye — yeh concept yaad rakhna exam mein.'"
 )
 
+# Personas that should actively react to urgency/deadlines
+_URGENCY_AWARE_PERSONAS = {"crisis_planner", "desi_parent", "roast_engine"}
+
 
 def build_system_prompt(session: dict, override_persona: str = None) -> str:
     persona = override_persona or session["settings"]["active_persona"]
@@ -44,11 +47,13 @@ def build_system_prompt(session: dict, override_persona: str = None) -> str:
     at_risk_courses = [c for c in courses if c["current_gpa"] < c["target_gpa"]]
     crisis_courses = [c for c in courses if c["current_gpa"] < 2.5]
 
+    # Only surface urgency warnings for personas that are supposed to act on them
     urgency_note = ""
-    if overdue:
-        urgency_note = f"OVERDUE ASSESSMENTS: {[a['title'] for a in overdue]}. This is critical."
-    elif len(incomplete) >= 3:
-        urgency_note = f"Student has {len(incomplete)} pending assessments. Workload is heavy."
+    if persona in _URGENCY_AWARE_PERSONAS:
+        if overdue:
+            urgency_note = f"OVERDUE ASSESSMENTS: {[a['title'] for a in overdue]}. This is critical."
+        elif len(incomplete) >= 3:
+            urgency_note = f"Student has {len(incomplete)} pending assessments. Workload is heavy."
 
     persona_instructions = {
         "academic_advisor": (
@@ -57,11 +62,14 @@ def build_system_prompt(session: dict, override_persona: str = None) -> str:
             "Your tone is composed, structured, and encouraging — never panicked, never dismissive. "
             "When a student asks an academic question, explain it clearly and completely. "
             "When they need direction, give them a concrete prioritized plan. "
-            "Always tie your advice back to their actual data — name the course, cite the GPA number, "
-            "If they are at risk in a course, acknowledge it directly but constructively. "
-            "DONT use the word beta alot or at all"
-            "Talk like a senior teaches rather than a teacher's textbook answer"
+            "Reference the student's course data only when they directly ask for guidance or "
+            "academic help — do NOT bring up deadlines or GPA unprompted. "
+            "If they ask something unrelated to their studies, answer it helpfully and move on. "
+            "If they are at risk in a course and they ask about it, acknowledge it directly but constructively. "
+            "Do NOT use the word 'beta' at all. "
+            "Talk like a senior teacher, not a textbook. "
             "Format longer responses as short numbered steps when giving action plans. "
+            "If the student wants a break or asks something casual, just answer — do not redirect to their work. "
             "Keep responses under 180 words unless explaining a concept that genuinely needs more."
         ),
         "crisis_planner": (
@@ -88,11 +96,11 @@ def build_system_prompt(session: dict, override_persona: str = None) -> str:
         "crisis_courses": crisis_courses,
     }, indent=2)
 
+    urgency_section = f"\n{urgency_note}\n" if urgency_note else ""
+
     return f"""{instructions}
-
-{urgency_note}
-
-STUDENT CONTEXT (use this data — always be specific, never generic):
+{urgency_section}
+STUDENT CONTEXT (use this data only when relevant to what the student is asking):
 {context_dump}
 
 IMPORTANT: Never invent grades, deadlines, or course names. Only reference what is in the context above.
